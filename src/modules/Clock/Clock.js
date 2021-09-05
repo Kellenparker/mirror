@@ -28,7 +28,7 @@ class Clock extends React.Component {
       hour: this.currentTime.getHours(),
       minute: this.currentTime.getMinutes(),
       month: this.currentTime.getMonth(),
-      day: this.currentTime.getDay(),
+      day: this.currentTime.getDate(),
       year: this.currentTime.getFullYear()
     });
   }
