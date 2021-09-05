@@ -50,7 +50,7 @@ class Clock extends React.Component {
           {this.monthName(this.state.month)} {this.state.day}, {this.state.year}
         </h3>
         <h3 className="time" style={{fontSize: "3vh"}}>
-          {this.state.hour % 12}:{this.state.minute} {this.state.hour >= 12 ? "PM" : "AM"}
+          {this.state.hour % 12}:{this.state.minute < 10 ? ("0" + this.state.minute) : this.state.minute} {this.state.hour >= 12 ? "PM" : "AM"}
         </h3>
       </div>
     );
