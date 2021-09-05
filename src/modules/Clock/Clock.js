@@ -46,10 +46,10 @@ class Clock extends React.Component {
         letterSpacing: "10px",
         textAlign: "center"
       }}>
-        <h3 className="date" style={{fontSize: "40px"}}>
+        <h3 className="date" style={{fontSize: "2vh"}}>
           {this.monthName(this.state.month)} {this.state.day}, {this.state.year}
         </h3>
-        <h3 className="time" style={{fontSize: "70px"}}>
+        <h3 className="time" style={{fontSize: "3vh"}}>
           {this.state.hour % 12}:{this.state.minute} {this.state.hour >= 12 ? "PM" : "AM"}
         </h3>
       </div>
