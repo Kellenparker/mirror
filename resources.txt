@@ -1,2 +1,8 @@
 https://www.christianengvall.se/electron-packager-tutorial/
 https://stackoverflow.com/questions/58736319/how-to-fix-browser-is-not-recognized-as-an-internal-or-external-command
+    npm install --save cross-env
+
+https://stackoverflow.com/questions/35682131/electron-packager-cannot-find-module
+    npm i -D electron@latest
+    "For me the problem was that the module dependencies were listed in "devDependencies" in package.json
+    moving them to "dependencies" and running npm install again solved the problem."

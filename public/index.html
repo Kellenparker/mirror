@@ -4,15 +4,57 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>React App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <style>
       body {
         background-color: black;
+        color:white;
+        overflow: hidden;
+      }
+      .size-mid {
+        height: 33vh;
+      }
+      .size-lg {
+        height: 80vh;
+        margin-top: -13vh;
+      }
+      .size-sm {
+        height: 20vh;
+      }
+      .bottom {
+        margin-top: -34vh;
+        height: 34vh;
+      }
+      .element {
+        border-style: solid;
+        border-color: white;
+        border-width: 1px;
+        font-size: 30px;
+        text-align: center;
       }
     </style>
   </head>
   <body>
 
-    <div id="root"></div>
+    <div id="root">
+      <div class="row">
+        <div class="element col-sm-3 size-mid" id="left1">left1</div>
+        <div class="element col-sm-6 size-sm" id="mid1">mid1</div>
+        <div class="element col-sm-3 size-mid" id="right1">right1</div>
+      </div>
+      <div class="row h-33">
+        <div class="element col-sm-3 size-mid" id="left2">left2</div>
+        <div class="element col-sm-6 size-lg" id="mid2">mid2</div>
+        <div class="element col-sm-3 size-mid" id="right2">right2</div>
+      </div>
+      <div class="row h-33">
+        <div class="element col-sm-3 size-mid bottom" id="left3">left3</div>
+        <div class="element col-sm-offset-9 col-sm-3 size-mid bottom" id="right3">right3</div>
+      </div>
+    </div>
+
+    <script src="../src/index.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 
   </body>
 </html>
