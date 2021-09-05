@@ -9,14 +9,11 @@ function createWindow() {
     frame: false,
     width: 1280,
     height: 900,
+    fullscreen: true,
     webPreferences: {
       nodeIntegration: true,
     },
   });
-
-  win.maximize();
-  win.show();
-
   // and load the index.html of the app.
   // win.loadFile("index.html");
   win.loadURL(
