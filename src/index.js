@@ -1,16 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Clock from './modules/Clock/Clock.js';
-import { app } from './db.js'
+import { app } from './firebase.js'
 import { getDatabase, ref, onValue} from "firebase/database";
 
 const db = getDatabase();
 const timeRef = ref(db, "time/");
+var data;
 
 onValue(timeRef, (snapshot) => {
-  const data = snapshot.val();
+  data = snapshot.val();
   console.log(data);
-  console.log("hello");
+  ReactDOM.render(<Clock disabled={data}/>, document.getElementById('mid1'));
 })
-
-ReactDOM.render(<Clock/>, document.getElementById('mid1'));

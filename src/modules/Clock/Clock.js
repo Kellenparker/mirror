@@ -9,7 +9,7 @@ class Clock extends React.Component {
       minute: this.currentTime.getMinutes(),
       month: this.currentTime.getMonth(),
       day: this.currentTime.getDate(),
-      year: this.currentTime.getFullYear()
+      year: this.currentTime.getFullYear(),
     };
     this.monthName = this.monthName.bind(this);
   }
@@ -44,12 +44,15 @@ class Clock extends React.Component {
         fontFamily: "helvetica",
         fontWeight: "lighter",
         letterSpacing: "10px",
-        textAlign: "center"
+        textAlign: "center",
+        opacity: this.props.disabled ? '0' : '1'
       }}>
-        <h3 className="date" style={{fontSize: "2vh"}}>
+        <h3 className="date" style={{fontSize: "2vh",
+        opacity: this.props.disabled ? '0' : '1'}}>
           {this.monthName(this.state.month)} {this.state.day}, {this.state.year}
         </h3>
-        <h3 className="time" style={{fontSize: "3vh"}}>
+        <h3 className="time" style={{fontSize: "3vh",
+        opacity: this.props.disabled ? '0' : '1'}}>
           {this.state.hour % 12}:{this.state.minute < 10 ? ("0" + this.state.minute) : this.state.minute} {this.state.hour >= 12 ? "PM" : "AM"}
         </h3>
       </div>
