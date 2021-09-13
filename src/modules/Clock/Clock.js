@@ -65,7 +65,7 @@ class Clock extends React.Component {
         </h3>
         <h3 className="time" style={{fontSize: "3vh",
         opacity: this.props.disabled ? '0' : '1'}}>
-          {this.state.hour > 12 ? this.state.hour % 12 : this.state.hour}:{this.state.minute < 10 ? ("0" + this.state.minute) : this.state.minute} {this.state.hour >= 12 ? "PM" : "AM"}
+          {this.state.hour > 12 ? this.state.hour % 12 : (this.state.hour === 0 || this.state.hour === 12) ? 12 : this.state.hour }:{this.state.minute < 10 ? ("0" + this.state.minute) : this.state.minute} {this.state.hour >= 12 ? "PM" : "AM"}
         </h3>
       </div>
     );
