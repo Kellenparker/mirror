@@ -6,3 +6,7 @@ https://stackoverflow.com/questions/35682131/electron-packager-cannot-find-modul
     npm i -D electron@latest
     "For me the problem was that the module dependencies were listed in "devDependencies" in package.json
     moving them to "dependencies" and running npm install again solved the problem."
+
+https://thenextweb.com/news/how-to-build-an-ai-stylist-inspired-by-outfits-on-instagram-syndication
+
+https://www.npmjs.com/package/pi-camera

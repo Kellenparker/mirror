@@ -10,6 +10,7 @@
     "cross-env": "^7.0.3",
     "electron-is-dev": "^2.0.0",
     "firebase": "^9.0.1",
+    "pi-camera": "^1.6.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
