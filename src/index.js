@@ -3,15 +3,7 @@ import ReactDOM from 'react-dom';
 import Clock from './modules/Clock/Clock.js';
 import { app } from './firebase.js'
 import { getDatabase, ref, onValue, set} from "firebase/database";
-
-const PiCamera = require('pi-camera');
-const myCamera = new PiCamera({
-  mode: 'photo',
-  output: `${ __dirname }/test.jpg`,
-  width: 640,
-  height: 480,
-  nopreview: true,
-});
+var request = require('request');
 
 const db = getDatabase();
 const timeRef = ref(db, "time/");
@@ -29,17 +21,16 @@ var captureData;
 onValue(captureRef, (snapshot) => {
   captureData = snapshot.val();
   console.log(captureData);
-  myCamera.snap()
-    .then((result) => {
-      console.log("Picture captured");
-    })
-    .catch((error) => {
-      console.log("Picture failed");
+  if(captureData){
+    var clientServerOptions = {
+      uri: 'http://localhost:3001/capture',
+    }
+    request(clientServerOptions, function (error, response) {
+        console.log(error,response.body);
+        return;
     });
-
-  set(cameraRef, {
-    capture: false
-  });
-
+    set(cameraRef, {
+      capture: false
+    });
+  }
 })
-
