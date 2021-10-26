@@ -2,6 +2,7 @@ const express = require('express')
 const PiCamera = require('pi-camera');
 const {spawn} = require('child_process');
 const {Storage} = require('@google-cloud/storage');
+const imageToBase64 = require('image-to-base64');
 const app = express()
 const cors = require('cors')
 const port = 3001
@@ -50,18 +51,40 @@ app.get('/capture', function(req, res) {
 			console.log("error");
 		});
 	
-	async function printLabels() {
+	async function buildLink() {
 		// Imports the Google Cloud client library
 		const vision = require('@google-cloud/vision');
 	  
 		// Creates a client
 		const client = new vision.ImageAnnotatorClient();
-	  
+
+		var img
+
+		await imageToBase64(`${ __dirname }/capture/img.jpg`)
+			.then((response) => {
+				img = response
+			})
+		
+		const request = {
+			image: {
+				content: img
+			},
+			features: [
+				{
+					maxResults: 50,
+					type: "LABEL_DETECTION"
+				}
+			]
+		};
 		// Performs label detection on the image file
-		const [result] = await client.labelDetection(`${ __dirname }/capture/img.jpg`);
-		const labels = result.labelAnnotations;
-		console.log('Labels:');
-		labels.forEach(label => console.log(label.description));
+		client.annotateImage(request)
+			.then((result) => {
+				console.log(result[0].labelAnnotations);
+				let labels = result[0].labelAnnotations;
+				console.log('Labels:');
+				labels.forEach(label => label.score > .5 ? console.log(label.description) : 0);
+			});
+		
 	  }
-	  printLabels();
+	  buildLink();
 });

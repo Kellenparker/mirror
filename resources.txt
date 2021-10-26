@@ -10,3 +10,6 @@ https://stackoverflow.com/questions/35682131/electron-packager-cannot-find-modul
 https://thenextweb.com/news/how-to-build-an-ai-stylist-inspired-by-outfits-on-instagram-syndication
 
 https://www.npmjs.com/package/pi-camera
+
+export GOOGLE_APPLICATION_CREDENTIALS="/Users/kellenparker/Downloads/genial-core-326621-828bafd08af8.json"
+
