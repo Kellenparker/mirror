@@ -23,6 +23,7 @@
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "request": "^2.88.2",
+    "unofficial-amazon-search": "^2.0.8",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
