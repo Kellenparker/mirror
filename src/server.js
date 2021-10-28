@@ -80,8 +80,6 @@ app.get('/capture', function(req, res) {
 		// Performs label detection on the image file
 		const apprLabels = ['Apron', 'Coat', 'Collar', 'Costume', 'Dress', 'Hoodie', 'Jacket', 'Jersey', 'Shirt', 'Blouse',
 							'Sweater', 'Sweatshirt', 'Vest', 'T-shirt'];
-
-		
 		
 		const clothingLabels = [];
 
@@ -91,6 +89,7 @@ app.get('/capture', function(req, res) {
 				let labels = result[0].labelAnnotations;
 				console.log('Labels:');
 				labels.forEach(label => label.score > .5 ? console.log(label.description) : 0);
+				
 				labels.forEach(function(label){
 					for(let i = 0; i < apprLabels.length; i++){
 						if(label.description === apprLabels[i]){
@@ -99,9 +98,20 @@ app.get('/capture', function(req, res) {
 						}
 					}
 				});
+				
 				console.log(clothingLabels);
+
+				let searchStr;
+
+				for(let i = 0; i < clothingLabels.length; i++){
+					searchStr = clothingLabels[i] + ' '
+				}
+
+				searchAmazon(searchStr).then(data => {
+						data.searchResults.forEach(result => console.log(result.title));
+				  	});
+
 			});
-		
 		
 	  }
 	  buildLink();
