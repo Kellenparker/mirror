@@ -5,6 +5,14 @@ import { app } from './firebase.js'
 import { getDatabase, ref, onValue, set} from "firebase/database";
 var request = require('request');
 
+var clientServerOptions = {
+  uri: 'http://localhost:3001/',
+}
+request(clientServerOptions, function (error, response) {
+    console.log(error,response.body);
+    return;
+});
+
 const db = getDatabase();
 const timeRef = ref(db, "time/");
 var timeData;
