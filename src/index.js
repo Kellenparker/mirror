@@ -5,6 +5,7 @@ import { app } from './firebase.js'
 import { getDatabase, ref, onValue, set} from "firebase/database";
 var request = require('request');
 
+// Call localhost:3001/ to initialize Firebase
 var clientServerOptions = {
   uri: 'http://localhost:3001/',
 }
@@ -22,13 +23,15 @@ onValue(timeRef, (snapshot) => {
   ReactDOM.render(<Clock disabled={timeData}/>, document.getElementById('mid1'));
 })
 
+// Get capture value
 const captureRef = ref(db, "camera/capture/");
 const cameraRef = ref(db, "camera/");
 var captureData;
-
 onValue(captureRef, (snapshot) => {
   captureData = snapshot.val();
   console.log(captureData);
+
+  // If capture is true, initialize server side scan function
   if(captureData){
     var clientServerOptions = {
       uri: 'http://localhost:3001/capture',
@@ -37,6 +40,7 @@ onValue(captureRef, (snapshot) => {
         console.log(error,response.body);
         return;
     });
+    // Set capture back to false after calling server function
     set(cameraRef, {
       capture: false
     });
