@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Clock from './modules/Clock/Clock.js';
-import { app } from './firebase.js'
+import Scan from './modules/Scan/Scan.js';
+import { app } from './firebase.js';
 import { getDatabase, ref, onValue, set } from "firebase/database";
 var request = require('request');
 
@@ -15,12 +16,19 @@ request(clientServerOptions, function (error, response) {
 });
 
 const db = getDatabase();
-const timeRef = ref(db, "time/");
-var timeData;
+const scanStageRef = ref(db, "scan/stage");
+var scanStage;
+onValue(scanStageRef, (snapshot) => {
+	scanStage = snapshot.val();
+	ReactDOM.render(<Scan stage={scanStage}/>, document.getElementById('mid2'));
+})
+
+const timeRef = ref(db, "modules/time");
+var timeDisabled, timeLocation;
 onValue(timeRef, (snapshot) => {
-	timeData = snapshot.val();
-	console.log(timeData);
-	ReactDOM.render(<Clock disabled={timeData} />, document.getElementById('loc4'));
+	timeDisabled = snapshot.child('disabled').val();
+	timeLocation = snapshot.child('location').val();
+	ReactDOM.render(<Clock disabled={timeDisabled} />, document.getElementById(timeLocation));
 })
 
 // Get capture value

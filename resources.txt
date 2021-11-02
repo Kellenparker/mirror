@@ -13,3 +13,5 @@ https://www.npmjs.com/package/pi-camera
 
 export GOOGLE_APPLICATION_CREDENTIALS="/Users/kellenparker/Downloads/genial-core-326621-828bafd08af8.json"
 
+https://stackoverflow.com/questions/36985738/how-to-unmount-unrender-or-remove-a-component-from-itself-in-a-react-redux-typ
+
