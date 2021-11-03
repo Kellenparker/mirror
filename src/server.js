@@ -3,7 +3,7 @@ const PiCamera = require('pi-camera');
 const { spawn } = require('child_process');
 const { Storage } = require('@google-cloud/storage');
 const { initializeApp } = require('firebase/app');
-const { getDatabase, ref, onValue, set, update, removeValue } = require('firebase/database');
+const { getDatabase, ref, onValue, set, update} = require('firebase/database');
 const imageToBase64 = require('image-to-base64');
 const { searchAmazon, AmazonSearchResult } = require('unofficial-amazon-search');
 const app = express()
@@ -50,6 +50,14 @@ app.get('/remove', function (req, res) {
 
 app.get('/capture', function (req, res) {
 	console.log('capture');
+
+	// Load database
+	const db = getDatabase();
+
+	// Set scan stage to 2 to update UI
+	set(ref(db, 'scan'), {
+		stage: 2
+	});
 
 	// Captures an image using raspberry pi camera
 	const myCamera = new PiCamera({
@@ -129,9 +137,6 @@ app.get('/capture', function (req, res) {
 				for (let i = 0; i < clothingLabels.length; i++)
 					searchStr += clothingLabels[i] + ' ';
 
-				// Load database
-				const db = getDatabase();
-
 				// Obtain age and gender data
 				const userRef = ref(db, 'user');
 				var ageData, genderData;
@@ -193,6 +198,10 @@ app.get('/capture', function (req, res) {
 							linkAmt: { count }
 						});
 
+						// Set scan stage to 3 to update UI
+						set(ref(db, 'scan'), {
+							stage: 3
+						});
 
 					});
 

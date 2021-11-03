@@ -9,7 +9,7 @@ var request = require('request');
 // Call localhost:3001/ to initialize Firebase
 var clientServerOptions = {
 	uri: 'http://localhost:3001/',
-}
+};
 request(clientServerOptions, function (error, response) {
 	console.log(error, response.body);
 	return;
@@ -43,7 +43,7 @@ onValue(captureRef, (snapshot) => {
 	if (captureData) {
 		var clientServerOptions = {
 			uri: 'http://localhost:3001/capture',
-		}
+		};
 		request(clientServerOptions, function (error, response) {
 			console.log(error, response.body);
 			return;

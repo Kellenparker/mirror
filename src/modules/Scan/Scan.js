@@ -1,4 +1,6 @@
 import React from 'react';
+import loading from './assets/loadingicon.gif';
+import outline from './assets/human.png';
 
 class Scan extends React.Component {
 	constructor(props) {
@@ -13,7 +15,21 @@ class Scan extends React.Component {
 				letterSpacing: "10px",
 				textAlign: "center",
 			}}>
-				<h3 style={{opacity: this.props.stage === 1 ? '1' : '0'}}>Please Center Yourself</h3>
+				<h3>{this.props.stage === 1 ? 'Please Center Yourself' : 
+					 this.props.stage === 2 ? 'Generating Recommendations' : 
+					 this.props.stage === 3 ? 'Scanning Complete' : ''}</h3>
+				<img style={{
+					position: 'absolute',
+					left: '25.5%',
+					marginRight: 'auto',
+					opacity: this.props.stage === 2 ? '1' : '0'
+				}} src={loading} alt="loading..." />
+				<img style={{
+					marginTop: '15vh',
+					marginLeft: 'auto',
+					marginRight: 'auto',
+					opacity: this.props.stage === 1 ? '1' : '0'
+				}} src={outline} alt="loading..." />
 			</div>
 		);
 	}
