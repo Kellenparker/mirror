@@ -55,7 +55,7 @@ app.get('/capture', function (req, res) {
 	const db = getDatabase();
 
 	// Set scan stage to 2 to update UI
-	set(ref(db, 'scan'), {
+	update(ref(db, 'scan'), {
 		stage: 2
 	});
 
@@ -199,7 +199,7 @@ app.get('/capture', function (req, res) {
 						});
 
 						// Set scan stage to 3 to update UI
-						set(ref(db, 'scan'), {
+						update(ref(db, 'scan'), {
 							stage: 3
 						});
 

@@ -16,8 +16,8 @@ class Scan extends React.Component {
 				textAlign: "center",
 			}}>
 				<h3>{this.props.stage === 1 ? 'Please Center Yourself' : 
-					 this.props.stage === 2 ? 'Generating Recommendations' : 
-					 this.props.stage === 3 ? 'Scanning Complete' : ''}</h3>
+					 this.props.stage === 2 ? 'Generating Recommendations...' : 
+					 this.props.stage === 3 ? 'Scanning Complete! <br/> Please Check App!' : ''}</h3>
 				<img style={{
 					position: 'absolute',
 					left: '25.5%',
