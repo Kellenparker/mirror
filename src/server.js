@@ -86,7 +86,7 @@ app.get('/capture', function (req, res) {
 		var img;
 
 		// Convert captured image to base64 for use in annotateImage request
-		await imageToBase64(`${__dirname}/capture/img2.jpg`)
+		await imageToBase64(`${__dirname}/capture/img.jpg`)
 			.then((response) => {
 				img = response;
 			})
@@ -107,7 +107,7 @@ app.get('/capture', function (req, res) {
 
 		// All appropriate clothing labels
 		const apprLabels = ['Apron', 'Bodybuilding', 'Coat', 'Costume', 'Dress', 'Hoodie', 'Jacket', 'Jersey', 'Shirt', 'Blouse', 'Sportswear',
-			'Sweater', 'Sweatshirt', 'Vest', 'T-shirt', 'Suit', 'Blazer', 'Dress shirt', 'Formal wear'];
+			'Sweater', 'Sweatshirt', 'Vest', 'T-shirt', 'Suit', 'Blazer', 'Dress shirt', 'Formal wear', 'Polo shirt'];
 
 		// Array that will hold only the clothing labels
 		const clothingLabels = [];

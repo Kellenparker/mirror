@@ -17,10 +17,10 @@ class Scan extends React.Component {
 			}}>
 				<h3>{this.props.stage === 1 ? 'Please Center Yourself' : 
 					 this.props.stage === 2 ? 'Generating Recommendations...' : 
-					 this.props.stage === 3 ? 'Scanning Complete! <br/> Please Check App!' : ''}</h3>
+					 this.props.stage === 3 ? 'Scanning Complete!' : ''}</h3>
 				<img style={{
 					position: 'absolute',
-					left: '25.5%',
+					left: '29.5vh',
 					marginRight: 'auto',
 					opacity: this.props.stage === 2 ? '1' : '0'
 				}} src={loading} alt="loading..." />
