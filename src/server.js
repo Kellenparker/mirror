@@ -7,7 +7,8 @@ const { getDatabase, ref, onValue, set, update} = require('firebase/database');
 const imageToBase64 = require('image-to-base64');
 const { searchAmazon, AmazonSearchResult } = require('unofficial-amazon-search');
 const app = express()
-const cors = require('cors')
+const cors = require('cors');
+const { noConflict } = require('jquery');
 const port = 3001
 
 app.use(cors())
@@ -75,6 +76,39 @@ app.get('/capture', function (req, res) {
 			console.log('error');
 		});
 
+	// Function used to filter out labels
+	function filterLabels(clothingAr, newLabel) {
+		clothingLen = clothingAr.length;
+		pushLabel = true;
+
+		const conflicts = [
+			['Vest', 'Bodybuilding'],
+			['adult', 'Bodybuilding']
+		];
+
+		// Test conflicts first
+		conflictLen = conflicts.length;
+
+		// Look for newLabel in conflicts array
+		for(let i = 0; i < conflictLen; i++){
+			// If newLabel is found, loop through its conflicts
+			if(conflicts[i][0] === newLabel){
+				labelLen = conflicts[i].length;
+				for(let j = 1; j < labelLen; j++){
+					// Look for conflict label within clothing array
+					for(let k = 0; k < clothingLen; k++){
+						if(conflicts[i][j] === clothingAr[k]){
+							pushLabel = false;
+							console.log("found conflict for label: " + newLabel + ", " + conflicts[i][j]); 
+						}
+					}
+				}
+			}
+		}
+		
+		pushLabel ? clothingAr.push(newLabel) : 0;
+	}
+
 	async function buildLink() {
 		// Imports the Google Cloud client library
 		const vision = require('@google-cloud/vision');
@@ -86,7 +120,7 @@ app.get('/capture', function (req, res) {
 		var img;
 
 		// Convert captured image to base64 for use in annotateImage request
-		await imageToBase64(`${__dirname}/capture/img.jpg`)
+		await imageToBase64(`${__dirname}/capture/img2.jpg`)
 			.then((response) => {
 				img = response;
 			})
@@ -110,7 +144,7 @@ app.get('/capture', function (req, res) {
 			'Sweater', 'Sweatshirt', 'Vest', 'T-shirt', 'Suit', 'Blazer', 'Dress shirt', 'Formal wear', 'Polo shirt'];
 
 		// Array that will hold only the clothing labels
-		const clothingLabels = [];
+		var clothingLabels = [];
 
 		// Get labels using Google Cloud Vision
 		let res = client.annotateImage(request)
@@ -125,17 +159,10 @@ app.get('/capture', function (req, res) {
 					for (let i = 0; i < len; i++) {
 						if (label.description === apprLabels[i]) {
 							// Update clothingLabels array with filtered labels
-							clothingLabels.push(label.description);
+							filterLabels(clothingLabels, label.description);
 						}
 					}
 				});
-
-				console.log(clothingLabels);
-
-				// Build search string 
-				let searchStr = '';
-				for (let i = 0; i < clothingLabels.length; i++)
-					searchStr += clothingLabels[i] + ' ';
 
 				// Obtain age and gender data
 				const userRef = ref(db, 'user');
@@ -155,12 +182,22 @@ app.get('/capture', function (req, res) {
 						ageStr = 'adult';
 
 					if (genderData === 0)
-						genderStr = 'male';
+						genderStr = 'mens';
 					else if (genderData === 1)
-						genderStr = 'female';
+						genderStr = 'womens';
 
-					// Add gender and age to search string
-					searchStr += ageStr + ' ' + genderStr;
+
+					filterLabels(clothingLabels, ageStr);
+					filterLabels(clothingLabels, genderStr);
+
+					console.log(clothingLabels);
+
+					// Build search string 
+					let searchStr = '';
+					let len = clothingLabels.length
+					for (let i = 0; i < len; i++)
+						searchStr += clothingLabels[i] + ' ';
+
 					console.log(searchStr);
 
 					// Grab amazon search results using search strings
