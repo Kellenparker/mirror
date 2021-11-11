@@ -9,6 +9,7 @@ const { searchAmazon, AmazonSearchResult } = require('unofficial-amazon-search')
 const app = express()
 const cors = require('cors');
 const { noConflict } = require('jquery');
+const { forInStatement } = require('@babel/types');
 const port = 3001
 
 app.use(cors())
@@ -82,8 +83,12 @@ app.get('/capture', function (req, res) {
 		pushLabel = true;
 
 		const conflicts = [
+			['Clothing', 'Dress', 'Day dress'],
 			['Vest', 'Bodybuilding'],
-			['adult', 'Bodybuilding']
+			['adult', 'Bodybuilding'],
+			['Sportswear', 'Dress', 'Dress shirt'],
+			['Blazer', 'Dress', 'Day dress'],
+			['Formal wear', 'Day dress']
 		];
 
 		// Test conflicts first
@@ -109,6 +114,61 @@ app.get('/capture', function (req, res) {
 		pushLabel ? clothingAr.push(newLabel) : 0;
 	}
 
+	function substituteLabels(clothingAr){
+		clothingLen = clothingAr.length;
+		var newAr = [];
+		var subIndexes = [];
+
+		// Last item will be the substitute for the beginning elements
+		// Example: Sun dress replaces Day dress
+		const substitutions = [
+			['Day dress', 'Sun dress']
+		];
+
+		subLen = substitutions.length;
+		changed = false;
+		for(let i = 0; i < subLen; i++){
+			let change = true;
+			let subIndexes = [];
+			// Skip if initial sub label does not exist in clothing array
+			if(!clothingAr.includes(substitutions[i][0])) continue;
+
+			insideLen = substitutions[i].length;
+			// Push initial index to subIndex
+			subIndexes.push(clothingAr.indexOf(substitutions[i][0]));
+			// Find indexes of elements to be replaced
+			for(let j = 1; j < insideLen - 1; j++){
+				let index = clothingAr.indexOf(substitutions[i][j]);
+				if(index === -1){
+					// If element does not exist, do not do substitution
+					change = false;
+					break;
+				}
+				else{
+					// Add index to index array
+					subIndexes.push(i);
+				}
+			}
+			
+			// Looks for next substitution if one is now found
+			if(!change) continue;
+
+			changed = true;
+
+			// If one is found, get replacement from substitution array
+			let replacement = substitutions[i][insideLen - 1];
+			
+			// Loop through clothing array to find elements that won't be replaced, add them to new array
+			for(let j = 0; j < clothingLen; j++){
+				if(subIndexes.includes(j)) continue;
+				newAr.push(clothingAr[j]);
+			}
+			// Add substitute to new array
+			newAr.push(replacement);
+		}
+		return changed ? newAr : clothingAr;
+	}
+
 	async function buildLink() {
 		// Imports the Google Cloud client library
 		const vision = require('@google-cloud/vision');
@@ -120,7 +180,7 @@ app.get('/capture', function (req, res) {
 		var img;
 
 		// Convert captured image to base64 for use in annotateImage request
-		await imageToBase64(`${__dirname}/capture/img2.jpg`)
+		await imageToBase64(`${__dirname}/capture/img3.png`)
 			.then((response) => {
 				img = response;
 			})
@@ -141,7 +201,7 @@ app.get('/capture', function (req, res) {
 
 		// All appropriate clothing labels
 		const apprLabels = ['Apron', 'Bodybuilding', 'Coat', 'Costume', 'Dress', 'Hoodie', 'Jacket', 'Jersey', 'Shirt', 'Blouse', 'Sportswear',
-			'Sweater', 'Sweatshirt', 'Vest', 'T-shirt', 'Suit', 'Blazer', 'Dress shirt', 'Formal wear', 'Polo shirt'];
+			'Sweater', 'Sweatshirt', 'Vest', 'T-shirt', 'Suit', 'Blazer', 'Dress shirt', 'Formal wear', 'Polo shirt', 'Leisure', 'Day dress'];
 
 		// Array that will hold only the clothing labels
 		var clothingLabels = [];
@@ -187,9 +247,14 @@ app.get('/capture', function (req, res) {
 						genderStr = 'womens';
 
 
+					if(clothingLabels.length <= 2)
+						filterLabels(clothingLabels, 'Clothing');
+
 					filterLabels(clothingLabels, ageStr);
 					filterLabels(clothingLabels, genderStr);
 
+					console.log(clothingLabels);
+					clothingLabels = substituteLabels(clothingLabels);
 					console.log(clothingLabels);
 
 					// Build search string 
@@ -205,7 +270,7 @@ app.get('/capture', function (req, res) {
 
 						const linksRef = ref(db, 'scan/links');
 
-						console.log(data);
+						// console.log(data);
 
 						// Save number of links in variable count
 						var count;
