@@ -82,6 +82,7 @@ app.get('/capture', function (req, res) {
 		clothingLen = clothingAr.length;
 		pushLabel = true;
 
+		// Conflict array: Leftmost label wont get added if leftward labels exist already
 		const conflicts = [
 			['Clothing', 'Dress', 'Day dress'],
 			['Vest', 'Bodybuilding'],
@@ -166,6 +167,7 @@ app.get('/capture', function (req, res) {
 			// Add substitute to new array
 			newAr.push(replacement);
 		}
+		// Return new set of labels if labels changed
 		return changed ? newAr : clothingAr;
 	}
 
@@ -250,10 +252,12 @@ app.get('/capture', function (req, res) {
 					if(clothingLabels.length <= 2)
 						filterLabels(clothingLabels, 'Clothing');
 
+					// Filter age and gender strings
 					filterLabels(clothingLabels, ageStr);
 					filterLabels(clothingLabels, genderStr);
 
 					console.log(clothingLabels);
+					// Run labels through substituteLabels function
 					clothingLabels = substituteLabels(clothingLabels);
 					console.log(clothingLabels);
 
