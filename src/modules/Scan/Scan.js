@@ -1,6 +1,6 @@
 import React from 'react';
-import loading from './assets/loadingicon.gif';
 import outline from './assets/human.png';
+import './spinner.css';
 
 class Scan extends React.Component {
 	constructor(props) {
@@ -18,18 +18,16 @@ class Scan extends React.Component {
 				<h3>{this.props.stage === 1 ? 'Please Center Yourself' : 
 					 this.props.stage === 2 ? 'Generating Recommendations...' : 
 					 this.props.stage === 3 ? 'Scanning Complete!' : ''}</h3>
-				<img style={{
-					position: 'absolute',
-					left: '29.5vh',
-					marginRight: 'auto',
+				<div className='triple-spinner' style={{
 					opacity: this.props.stage === 2 ? '1' : '0'
-				}} src={loading} alt="loading..." />
+				}}></div>
 				<img style={{
-					marginTop: '15vh',
-					marginLeft: 'auto',
-					marginRight: 'auto',
+					position: 'relative',
+					display: 'inline-block',
+					zIndex: '9',
+					marginTop: '-13vh',
 					opacity: this.props.stage === 1 ? '1' : '0'
-				}} src={outline} alt="loading..." />
+				}} src={outline} alt="outline" />
 			</div>
 		);
 	}

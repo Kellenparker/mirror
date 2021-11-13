@@ -118,7 +118,6 @@ app.get('/capture', function (req, res) {
 	function substituteLabels(clothingAr){
 		clothingLen = clothingAr.length;
 		var newAr = [];
-		var subIndexes = [];
 
 		// Last item will be the substitute for the beginning elements
 		// Example: Sun dress replaces Day dress
