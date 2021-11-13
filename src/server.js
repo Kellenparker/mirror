@@ -89,10 +89,10 @@ app.get('/capture', function (req, res) {
 		const conflicts = [
 			['Clothing', 'Dress', 'Day dress'],
 			['adult', 'Bodybuilding'],
-			['Sportswear', 'Dress', 'Dress shirt'],
+			['Sportswear', 'Dress', 'Dress shirt', 'Fashion design'],
 			['Blazer', 'Dress', 'Day dress'],
 			['Formal wear', 'Day dress'],
-			['Sportswear', 'Fashion design']
+			['T-shirt', 'Coat']
 		];
 
 		// Test conflicts first
@@ -126,6 +126,18 @@ app.get('/capture', function (req, res) {
 			['Blouse', 'womens', 'adult', 'Blouse'],
 			['Vest', 'Bodybuilding', 'Bodybuilding Tank-top'],
 			['Sportswear', 'T-shirt', 'Athletic shirt'],
+			['Abdomen', 'Formal wear', 'Crop top'],
+			['Crop top', 'adult', 'Crop top'],
+			['Fur clothing', 'Fur', 'Fur'],
+			['Blazer', 'Fur', 'Fur coat'],
+			['Coat', 'Fur', 'Fur coat', 'Fur coat'],
+			['Formal wear', 'Formal'],
+			['Dress shirt', 'Formal', 'Formal'],
+			['Cowboy hat', 'Blazer', 'Western flannel'],
+			['Cowboy hat', 'Western'],
+			['Hoodie', 'T-shirt', 'Hoodie'],
+			['Hoodie', 'Formal', 'Hoodie'],
+			['Hoodie', 'Fur coat', 'Hoodie'],
 			['Style'],
 			['Fashion design'],
 			['Pattern']
@@ -190,10 +202,10 @@ app.get('/capture', function (req, res) {
 		var img;
 
 		// Convert captured image to base64 for use in annotateImage request
-		await imageToBase64(`${__dirname}/capture/img2.jpg`)
+		await imageToBase64(`${__dirname}/capture/img15.png`)
 			.then((response) => {
 				img = response;
-			})
+			});
 
 		// Create request for annotateImage
 		const request = {
@@ -210,9 +222,9 @@ app.get('/capture', function (req, res) {
 		};
 
 		// All appropriate clothing labels
-		const apprLabels = ['Apron', 'Bodybuilding', 'Coat', 'Costume', 'Dress', 'Hoodie', 'Jacket', 'Jersey', 'Shirt', 'Blouse', 'Sportswear',
-			'Sweater', 'Sweatshirt', 'Vest', 'T-shirt', 'Suit', 'Blazer', 'Dress shirt', 'Formal wear', 'Polo shirt', 'Leisure', 'Day dress',
-			'Style', 'Fashion design', 'Pattern'];
+		const apprLabels = ['Apron', 'Bodybuilding', 'Coat', 'Dress', 'Hoodie', 'Jacket', 'Jersey', 'Shirt', 'Blouse', 'Sportswear',
+			'Sweater', 'Sweatshirt', 'Vest', 'T-shirt', 'Suit', 'Blazer', 'Dress shirt', 'Formal wear', 'Polo shirt', 'Day dress','Style', 
+			'Fashion design', 'Pattern', 'Fur clothing', 'Abdomen', 'Fur', 'Cowboy hat'];
 
 		// Array that will hold only the clothing labels
 		var clothingLabels = [];
