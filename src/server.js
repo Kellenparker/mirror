@@ -88,7 +88,6 @@ app.get('/capture', function (req, res) {
 		// Conflict array: Leftmost label wont get added if leftward labels exist already
 		const conflicts = [
 			['Clothing', 'Dress', 'Day dress'],
-			['Vest', 'Bodybuilding'],
 			['adult', 'Bodybuilding'],
 			['Sportswear', 'Dress', 'Dress shirt'],
 			['Blazer', 'Dress', 'Day dress'],
@@ -125,6 +124,8 @@ app.get('/capture', function (req, res) {
 			['Day dress', 'Sun dress'],
 			['Style', 'Fashion design', 'T-shirt', 'Blouse'],
 			['Blouse', 'womens', 'adult', 'Blouse'],
+			['Vest', 'Bodybuilding', 'Bodybuilding Tank-top'],
+			['Sportswear', 'T-shirt', 'Athletic shirt'],
 			['Style'],
 			['Fashion design'],
 			['Pattern']
@@ -189,7 +190,7 @@ app.get('/capture', function (req, res) {
 		var img;
 
 		// Convert captured image to base64 for use in annotateImage request
-		await imageToBase64(`${__dirname}/capture/img6.jpg`)
+		await imageToBase64(`${__dirname}/capture/img2.jpg`)
 			.then((response) => {
 				img = response;
 			})
@@ -316,6 +317,12 @@ app.get('/capture', function (req, res) {
 						update(ref(db, 'scan'), {
 							stage: 3
 						});
+
+						setTimeout(function(){ 
+							update(ref(db, 'scan'), {
+								stage: 0
+							});
+						}, 10000);  
 
 					});
 

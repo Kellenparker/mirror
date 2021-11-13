@@ -15,3 +15,4 @@ export GOOGLE_APPLICATION_CREDENTIALS="/Users/kellenparker/Downloads/genial-core
 
 https://stackoverflow.com/questions/36985738/how-to-unmount-unrender-or-remove-a-component-from-itself-in-a-react-redux-typ
 
+$env:GOOGLE_APPLICATION_CREDENTIALS="D:\dev\genial-core-326621-c207d4b88c10.json"
