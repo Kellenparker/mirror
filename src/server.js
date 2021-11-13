@@ -79,6 +79,9 @@ app.get('/capture', function (req, res) {
 
 	// Function used to filter out labels
 	function filterLabels(clothingAr, newLabel) {
+		//First check if label already exists
+		if(clothingAr.includes(newLabel)) return;
+
 		clothingLen = clothingAr.length;
 		pushLabel = true;
 
@@ -89,7 +92,8 @@ app.get('/capture', function (req, res) {
 			['adult', 'Bodybuilding'],
 			['Sportswear', 'Dress', 'Dress shirt'],
 			['Blazer', 'Dress', 'Day dress'],
-			['Formal wear', 'Day dress']
+			['Formal wear', 'Day dress'],
+			['Sportswear', 'Fashion design']
 		];
 
 		// Test conflicts first
@@ -101,12 +105,9 @@ app.get('/capture', function (req, res) {
 			if(conflicts[i][0] === newLabel){
 				labelLen = conflicts[i].length;
 				for(let j = 1; j < labelLen; j++){
-					// Look for conflict label within clothing array
-					for(let k = 0; k < clothingLen; k++){
-						if(conflicts[i][j] === clothingAr[k]){
-							pushLabel = false;
-							console.log("found conflict for label: " + newLabel + ", " + conflicts[i][j]); 
-						}
+					if(clothingAr.includes(conflicts[i][j])){
+						pushLabel = false;
+						console.log("found conflict for label: " + newLabel + ", " + conflicts[i][j]); 
 					}
 				}
 			}
@@ -116,27 +117,34 @@ app.get('/capture', function (req, res) {
 	}
 
 	function substituteLabels(clothingAr){
-		clothingLen = clothingAr.length;
-		var newAr = [];
 
 		// Last item will be the substitute for the beginning elements
 		// Example: Sun dress replaces Day dress
+		// Single element arrays will just be replaced with nothing
 		const substitutions = [
-			['Day dress', 'Sun dress']
+			['Day dress', 'Sun dress'],
+			['Style', 'Fashion design', 'T-shirt', 'Blouse'],
+			['Blouse', 'womens', 'adult', 'Blouse'],
+			['Style'],
+			['Fashion design'],
+			['Pattern']
 		];
 
 		subLen = substitutions.length;
-		changed = false;
 		for(let i = 0; i < subLen; i++){
+			clothingLen = clothingAr.length;
 			let change = true;
 			let subIndexes = [];
+			let newAr = [];
+
 			// Skip if initial sub label does not exist in clothing array
 			if(!clothingAr.includes(substitutions[i][0])) continue;
 
-			insideLen = substitutions[i].length;
 			// Push initial index to subIndex
 			subIndexes.push(clothingAr.indexOf(substitutions[i][0]));
+
 			// Find indexes of elements to be replaced
+			insideLen = substitutions[i].length;
 			for(let j = 1; j < insideLen - 1; j++){
 				let index = clothingAr.indexOf(substitutions[i][j]);
 				if(index === -1){
@@ -146,17 +154,16 @@ app.get('/capture', function (req, res) {
 				}
 				else{
 					// Add index to index array
-					subIndexes.push(i);
+					subIndexes.push(index);
 				}
 			}
 			
 			// Looks for next substitution if one is now found
 			if(!change) continue;
 
-			changed = true;
-
 			// If one is found, get replacement from substitution array
-			let replacement = substitutions[i][insideLen - 1];
+			let replacement;
+			insideLen != 1 ? replacement = substitutions[i][insideLen - 1] : 0;
 			
 			// Loop through clothing array to find elements that won't be replaced, add them to new array
 			for(let j = 0; j < clothingLen; j++){
@@ -164,10 +171,11 @@ app.get('/capture', function (req, res) {
 				newAr.push(clothingAr[j]);
 			}
 			// Add substitute to new array
-			newAr.push(replacement);
+			insideLen != 1 ? newAr.push(replacement) : 0;
+			clothingAr = newAr;
 		}
 		// Return new set of labels if labels changed
-		return changed ? newAr : clothingAr;
+		return clothingAr;
 	}
 
 	async function buildLink() {
@@ -181,7 +189,7 @@ app.get('/capture', function (req, res) {
 		var img;
 
 		// Convert captured image to base64 for use in annotateImage request
-		await imageToBase64(`${__dirname}/capture/img3.png`)
+		await imageToBase64(`${__dirname}/capture/img6.jpg`)
 			.then((response) => {
 				img = response;
 			})
@@ -202,7 +210,8 @@ app.get('/capture', function (req, res) {
 
 		// All appropriate clothing labels
 		const apprLabels = ['Apron', 'Bodybuilding', 'Coat', 'Costume', 'Dress', 'Hoodie', 'Jacket', 'Jersey', 'Shirt', 'Blouse', 'Sportswear',
-			'Sweater', 'Sweatshirt', 'Vest', 'T-shirt', 'Suit', 'Blazer', 'Dress shirt', 'Formal wear', 'Polo shirt', 'Leisure', 'Day dress'];
+			'Sweater', 'Sweatshirt', 'Vest', 'T-shirt', 'Suit', 'Blazer', 'Dress shirt', 'Formal wear', 'Polo shirt', 'Leisure', 'Day dress',
+			'Style', 'Fashion design', 'Pattern'];
 
 		// Array that will hold only the clothing labels
 		var clothingLabels = [];
