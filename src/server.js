@@ -92,7 +92,8 @@ app.get('/capture', function (req, res) {
 			['Sportswear', 'Dress', 'Dress shirt', 'Fashion design'],
 			['Blazer', 'Dress', 'Day dress'],
 			['Formal wear', 'Day dress'],
-			['T-shirt', 'Coat']
+			['T-shirt', 'Coat'],
+			['Jersey', 'Dress shirt']
 		];
 
 		// Test conflicts first
@@ -132,15 +133,23 @@ app.get('/capture', function (req, res) {
 			['Blazer', 'Fur', 'Fur coat'],
 			['Coat', 'Fur', 'Fur coat', 'Fur coat'],
 			['Formal wear', 'Formal'],
+			['Dress shirt', 'Formal', 'Blazer', 'Flannel'],
+			['Flannel', 'T-shirt', 'Flannel'],
 			['Dress shirt', 'Formal', 'Formal'],
 			['Cowboy hat', 'Blazer', 'Western flannel'],
 			['Cowboy hat', 'Western'],
 			['Hoodie', 'T-shirt', 'Hoodie'],
 			['Hoodie', 'Formal', 'Hoodie'],
 			['Hoodie', 'Fur coat', 'Hoodie'],
+			['Fur coat', 'Formal', 'Jersey', 'T-shirt', 'adult', 'Cardigan'],
+			['Fur', 'adult', 'Fuzzy hoodie'],
+			['Blazer','Athletic shirt', 'Formal', 'Long Sleeve'],
+			['Blazer', 'Vest', 'Crop top', 'Athletic shirt', 'Tank top'],
 			['Style'],
 			['Fashion design'],
-			['Pattern']
+			['Pattern'],
+			['Plaid'],
+			['adult']
 		];
 
 		subLen = substitutions.length;
@@ -202,7 +211,7 @@ app.get('/capture', function (req, res) {
 		var img;
 
 		// Convert captured image to base64 for use in annotateImage request
-		await imageToBase64(`${__dirname}/capture/img15.png`)
+		await imageToBase64(`${__dirname}/capture/img21.jpg`)
 			.then((response) => {
 				img = response;
 			});
@@ -224,7 +233,7 @@ app.get('/capture', function (req, res) {
 		// All appropriate clothing labels
 		const apprLabels = ['Apron', 'Bodybuilding', 'Coat', 'Dress', 'Hoodie', 'Jacket', 'Jersey', 'Shirt', 'Blouse', 'Sportswear',
 			'Sweater', 'Sweatshirt', 'Vest', 'T-shirt', 'Suit', 'Blazer', 'Dress shirt', 'Formal wear', 'Polo shirt', 'Day dress','Style', 
-			'Fashion design', 'Pattern', 'Fur clothing', 'Abdomen', 'Fur', 'Cowboy hat'];
+			'Fashion design', 'Pattern', 'Fur clothing', 'Abdomen', 'Fur', 'Cowboy hat', 'Plaid'];
 
 		// Array that will hold only the clothing labels
 		var clothingLabels = [];
