@@ -133,7 +133,7 @@ app.get('/capture', function (req, res) {
 			['Blazer', 'Fur', 'Fur coat'],
 			['Coat', 'Fur', 'Fur coat', 'Fur coat'],
 			['Formal wear', 'Formal'],
-			['Dress shirt', 'Formal', 'Blazer', 'Flannel'],
+			['Dress shirt', 'Formal', 'Plaid', 'Plaid shirt'],
 			['Flannel', 'T-shirt', 'Flannel'],
 			['Dress shirt', 'Formal', 'Formal'],
 			['Cowboy hat', 'Blazer', 'Western flannel'],
