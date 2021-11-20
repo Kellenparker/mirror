@@ -64,7 +64,7 @@ app.get('/capture', function (req, res) {
 	// Captures an image using raspberry pi camera
 	const myCamera = new PiCamera({
 		mode: 'photo',
-		output: `${__dirname}/capture/img.jpg`,
+		output: `${__dirname}/capture/img.jpeg`,
 		width: 1280,
 		height: 900,
 		nopreview: true,
@@ -87,13 +87,16 @@ app.get('/capture', function (req, res) {
 
 		// Conflict array: Leftmost label wont get added if leftward labels exist already
 		const conflicts = [
-			['Clothing', 'Dress', 'Day dress'],
-			['adult', 'Bodybuilding'],
-			['Sportswear', 'Dress', 'Dress shirt', 'Fashion design'],
-			['Blazer', 'Dress', 'Day dress'],
-			['Formal wear', 'Day dress'],
-			['T-shirt', 'Coat'],
-			['Jersey', 'Dress shirt']
+			['Jersey', 'Dress shirt'],
+			['Blazer', 'Dress shirt'],
+			['T-shirt', 'Dress shirt'],
+			['Vest', 'Sportswear'],
+			['Fur', 'Jacket'],
+			['T-shirt', 'Coat', 'Blazer'],
+			['Cardigan', 'Blazer', 'Coat'],
+			['Blazer', 'Coat'],
+			['Blazer', 'Dress'],
+			['Formal wear', 'Day dress']
 		];
 
 		// Test conflicts first
@@ -122,34 +125,37 @@ app.get('/capture', function (req, res) {
 		// Example: Sun dress replaces Day dress
 		// Single element arrays will just be replaced with nothing
 		const substitutions = [
-			['Day dress', 'Sun dress'],
-			['Style', 'Fashion design', 'T-shirt', 'Blouse'],
-			['Blouse', 'womens', 'adult', 'Blouse'],
-			['Vest', 'Bodybuilding', 'Bodybuilding Tank-top'],
-			['Sportswear', 'T-shirt', 'Athletic shirt'],
-			['Abdomen', 'Formal wear', 'Crop top'],
-			['Crop top', 'adult', 'Crop top'],
-			['Fur clothing', 'Fur', 'Fur'],
-			['Blazer', 'Fur', 'Fur coat'],
-			['Coat', 'Fur', 'Fur coat', 'Fur coat'],
-			['Formal wear', 'Formal'],
-			['Dress shirt', 'Formal', 'Plaid', 'Plaid shirt'],
-			['Flannel', 'T-shirt', 'Flannel'],
-			['Dress shirt', 'Formal', 'Formal'],
-			['Cowboy hat', 'Blazer', 'Western flannel'],
-			['Cowboy hat', 'Western'],
-			['Hoodie', 'T-shirt', 'Hoodie'],
-			['Hoodie', 'Formal', 'Hoodie'],
-			['Hoodie', 'Fur coat', 'Hoodie'],
-			['Fur coat', 'Formal', 'Jersey', 'T-shirt', 'adult', 'Cardigan'],
-			['Fur', 'adult', 'Fuzzy hoodie'],
-			['Blazer','Athletic shirt', 'Formal', 'Long Sleeve'],
-			['Blazer', 'Vest', 'Crop top', 'Athletic shirt', 'Tank top'],
-			['Style'],
+			['Formal wear', 'Fashion design', 'Blazer', 'Jersey', 'Sportswear', 'Sportswear'],
+			['adult'],
+			[ 'Jacket', 'Jacket Hoodie Sweatshirts'],
+			['Dress shirt', 'Sportswear', 'Formal wear', 'Hoodie', 'Jacket Hoodie Sweatshirts', 'Jacket Hoodie Sweatshirts'],
+			[ 'Fur', 'Fuzzy'],
+			['Fuzzy', 'Pattern', 'Fuzzy shirts Sweatshirt Hoodie'],
 			['Fashion design'],
-			['Pattern'],
-			['Plaid'],
-			['adult']
+			['Dress shirt', 'Formal wear', 'Pattern', 'Button up Shirt'],
+			['Abdomen', 'Formal wear', 'Pattern', 'Crop top Blouses'],
+			['Jersey', 'Vest', 'T-shirt', 'Tank top'],
+			['Abdomen', 'Pattern', 'Jersey', 'Sportswear', 'T-shirt', 'T-shirts and Tank top'],
+			['Abdomen', 'Pattern', 'T-shirt', 'Sportswear', 'T-shirt and Tank top'],
+			['Sweatshirt', 'T-shirt', 'Pattern', 'Sportswear', 'Long sleeve'],
+			['Sportswear', 'Fuzzy shirts Sweatshirt Hoodie', 'Cardigans'],
+			['Fuzzy Shirt Sweatshirt Hoodie', 'T-shirt and Tank top', 'Fuzzy tops Cardigans'],
+			['Cowboy hat', 'Hoodie', 'Western flannel'],
+			['Cowboy hat', 'Button up Shirt', 'Western flannel'],
+			['Coat', 'Suit', 'Hoodie', 'Suit Coat'],
+			['Formal wear', 'Coat', 'Fur clothing', 'Fuzzy shirts Sweatshirt Hoodie', 'Fuzzy Sweatershirts Coats'],
+			['Blazer', 'Formal wear', 'Fuzzy', 'Fuzzy Sweatershirts Coats'],
+			['Style', 'Abdomen', 'T-shirt and Tank top', 'Blouses'],
+			['Style', 'T-shirt and Tank top', 'Blouse'],
+			['Shirt', 'Suit Coat', 'Blazer'],
+			['Shirt', 'Coat', 'Suit', 'Button up Shirt', 'Blazer'],
+			['Dress', 'Day dress', 'Sun dress'],
+			['Pattern', 'Sun dress', 'Sun dress'],
+			['Vest', 'Bodybuilding', 'Bodybuilding Tank-top'],
+			['Abdomen', 'T-shirt', 'Bodybuilding Tank-top', 'Bodybuilding Tank-top'],
+			['Suit', 'Hoodie', 'Blazer'],
+			['Polo shirt', 'Abdomen', 'T-shirts and Tank top', 'Polo Shirt'],
+			['Polo shirt', 'T-shirt', 'Jersey', 'Abdomen', 'Polo Shirt']			
 		];
 
 		subLen = substitutions.length;
@@ -211,7 +217,7 @@ app.get('/capture', function (req, res) {
 		var img;
 
 		// Convert captured image to base64 for use in annotateImage request
-		await imageToBase64(`${__dirname}/capture/img21.jpg`)
+		await imageToBase64(`${__dirname}/capture/img.jpeg`)
 			.then((response) => {
 				img = response;
 			});
@@ -233,7 +239,7 @@ app.get('/capture', function (req, res) {
 		// All appropriate clothing labels
 		const apprLabels = ['Apron', 'Bodybuilding', 'Coat', 'Dress', 'Hoodie', 'Jacket', 'Jersey', 'Shirt', 'Blouse', 'Sportswear',
 			'Sweater', 'Sweatshirt', 'Vest', 'T-shirt', 'Suit', 'Blazer', 'Dress shirt', 'Formal wear', 'Polo shirt', 'Day dress','Style', 
-			'Fashion design', 'Pattern', 'Fur clothing', 'Abdomen', 'Fur', 'Cowboy hat', 'Plaid'];
+			'Fashion design', 'Pattern', 'Fur clothing', 'Abdomen', 'Fur', 'Cowboy hat', 'Cardigan', 'Tank Top', 'Long sleeve'];
 
 		// Array that will hold only the clothing labels
 		var clothingLabels = [];
