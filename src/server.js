@@ -49,8 +49,8 @@ app.get('/capture', function (req, res, next) {
 	const myCamera = new PiCamera({
 		mode: 'photo',
 		output: `${__dirname}/capture/img.jpeg`,
-		width: 1280,
-		height: 900,
+		width: 900,
+		height: 1280,
 		nopreview: true,
 	});
 	myCamera.snap()
