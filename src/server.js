@@ -34,23 +34,7 @@ app.get('/', (req, res) => {
 	const app = initializeApp(firebaseConfig);
 })
 
-// Start your server on a specified port
-app.listen(port, () => {
-	console.log(`Server is running on port ${port}`)
-})
-
-app.get('/remove', function (req, res) {
-	// Load database
-	const db = getDatabase();
-	const linksRef = ref(db, 'scan/links');
-
-	// Remove all links by using set function
-	set(linksRef, {
-		linkAmt: 0
-	});
-})
-
-app.get('/capture', function (req, res) {
+app.get('/capture', function (req, res, next) {
 	console.log('capture');
 
 	// Load database
@@ -362,4 +346,21 @@ app.get('/capture', function (req, res) {
 
 	}
 	buildLink();
+	next();
 });
+
+// Start your server on a specified port
+app.listen(port, () => {
+	console.log(`Server is running on port ${port}`)
+})
+
+app.get('/remove', function (req, res) {
+	// Load database
+	const db = getDatabase();
+	const linksRef = ref(db, 'scan/links');
+
+	// Remove all links by using set function
+	set(linksRef, {
+		linkAmt: 0
+	});
+})
