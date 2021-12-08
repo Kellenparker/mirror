@@ -3,7 +3,7 @@ import React from 'react';
 class Clock extends React.Component {
 	constructor(props) {
 		super(props);
-		this.currentTime = new Date()
+		this.currentTime = new Date();
 		this.state = {
 			hour: this.currentTime.getHours(),
 			minute: this.currentTime.getMinutes(),

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Clock from './modules/Clock/Clock.js';
 import Scan from './modules/Scan/Scan.js';
+import Weather from './modules/Weather/Weather.js'
 import { app } from './firebase.js';
 import { getDatabase, ref, onValue, set } from "firebase/database";
 var request = require('request');
@@ -29,6 +30,14 @@ onValue(timeRef, (snapshot) => {
 	timeDisabled = snapshot.child('disabled').val();
 	timeLocation = snapshot.child('location').val();
 	ReactDOM.render(<Clock disabled={timeDisabled} />, document.getElementById(timeLocation));
+})
+
+const weatherRef = ref(db, "modules/weather");
+var weatherDisabled, weatherLocation;
+onValue(weatherRef, (snapshot) => {
+	weatherDisabled = snapshot.child('disabled').val();
+	weatherLocation = snapshot.child('location').val();
+	ReactDOM.render(<Weather disabled={weatherDisabled} />, document.getElementById(weatherLocation));
 })
 
 // Get capture value

@@ -34,7 +34,23 @@ app.get('/', (req, res) => {
 	const app = initializeApp(firebaseConfig);
 })
 
-app.get('/capture', function (req, res, next) {
+// Start your server on a specified port
+app.listen(port, () => {
+	console.log(`Server is running on port ${port}`)
+})
+
+app.get('/remove', function (req, res) {
+	// Load database
+	const db = getDatabase();
+	const linksRef = ref(db, 'scan/links');
+
+	// Remove all links by using set function
+	set(linksRef, {
+		linkAmt: 0
+	});
+})
+
+app.get('/capture', function (req, res) {
 	console.log('capture');
 
 	// Load database
@@ -48,9 +64,9 @@ app.get('/capture', function (req, res, next) {
 	// Captures an image using raspberry pi camera
 	const myCamera = new PiCamera({
 		mode: 'photo',
-		output: `${__dirname}/capture/img.jpeg`,
-		width: 900,
-		height: 1280,
+		output: `${__dirname}/capture/img.jpg`,
+		width: 1280,
+		height: 900,
 		nopreview: true,
 	});
 	myCamera.snap()
@@ -110,6 +126,10 @@ app.get('/capture', function (req, res, next) {
 		// Single element arrays will just be replaced with nothing
 		const substitutions = [
 			['Formal wear', 'Fashion design', 'Blazer', 'Jersey', 'Sportswear', 'Sportswear'],
+			['T-shirt', 'Clothing', 'Dress Shirt'],
+			['T-shirt', 'Clothing', 'Abdomen', 'Dress Shirt'],
+			['T-shirt', 'Abdomen', 'Dress Shirt'],
+			['Clothing', 'Dress shirt'],
 			['adult'],
 			[ 'Jacket', 'Jacket Hoodie Sweatshirts'],
 			['Dress shirt', 'Sportswear', 'Formal wear', 'Hoodie', 'Jacket Hoodie Sweatshirts', 'Jacket Hoodie Sweatshirts'],
@@ -201,7 +221,7 @@ app.get('/capture', function (req, res, next) {
 		var img;
 
 		// Convert captured image to base64 for use in annotateImage request
-		await imageToBase64(`${__dirname}/capture/img.jpeg`)
+		await imageToBase64(`${__dirname}/capture/img.jpg`)
 			.then((response) => {
 				img = response;
 			});
@@ -346,21 +366,4 @@ app.get('/capture', function (req, res, next) {
 
 	}
 	buildLink();
-	next();
 });
-
-// Start your server on a specified port
-app.listen(port, () => {
-	console.log(`Server is running on port ${port}`)
-})
-
-app.get('/remove', function (req, res) {
-	// Load database
-	const db = getDatabase();
-	const linksRef = ref(db, 'scan/links');
-
-	// Remove all links by using set function
-	set(linksRef, {
-		linkAmt: 0
-	});
-})
