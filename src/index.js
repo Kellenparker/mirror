@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Clock from './modules/Clock/Clock.js';
 import Scan from './modules/Scan/Scan.js';
 import Weather from './modules/Weather/Weather.js'
+import Calendar from './modules/Calendar/Calendar.js'
 import { app } from './firebase.js';
 import { getDatabase, ref, onValue, set } from "firebase/database";
 var request = require('request');
@@ -39,6 +40,17 @@ onValue(weatherRef, (snapshot) => {
 	weatherLocation = snapshot.child('location').val();
 	ReactDOM.render(<Weather disabled={weatherDisabled} />, document.getElementById(weatherLocation));
 })
+
+const calendarRef = ref(db, "modules/calendar");
+var calendarDisabled, calendarLocation;
+onValue(calendarRef, (snapshot) => {
+	calendarDisabled = snapshot.child('disabled').val();
+	calendarLocation = snapshot.child('location').val();
+	ReactDOM.render(<Calendar disabled={calendarDisabled} />, document.getElementById(calendarLocation));
+})
+
+// ReactDOM.render(<Calendar/>, document.getElementById(3));
+
 
 // Get capture value
 const captureRef = ref(db, "scan/camera/capture/");
