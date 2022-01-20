@@ -56,12 +56,10 @@ class Weather extends React.Component {
 			console.log(obj);
 			return obj;
 		} catch (error) {
-            console.error(error);
         }
 	}
 	async updateWeather(){
 		const data = await this.getWeather();
-		console.log(data.current.temp);
 		this.setState({
 			current: {
 				sunrise: data.current.sunrise,
@@ -90,8 +88,6 @@ class Weather extends React.Component {
 				id: data.daily[3].weather[0].id
 			},
 		});
-
-		console.log(this.state);
 	}
 	getConditions(id){
 		let daytime = this.getDaytime();
@@ -128,7 +124,6 @@ class Weather extends React.Component {
 			else str += "night-";
 			str += "cloudy"
 		}
-		console.log(str);
 		return str;
 	}
 	getDaytime(){

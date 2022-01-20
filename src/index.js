@@ -4,9 +4,11 @@ import Clock from './modules/Clock/Clock.js';
 import Scan from './modules/Scan/Scan.js';
 import Weather from './modules/Weather/Weather.js'
 import Calendar from './modules/Calendar/Calendar.js'
+import Motivation from './modules/Motivation/Motivation.js'
 import { app } from './firebase.js';
 import { getDatabase, ref, onValue, set } from "firebase/database";
 var request = require('request');
+
 
 // Call localhost:3001/ to initialize Firebase
 var clientServerOptions = {
@@ -48,6 +50,15 @@ onValue(calendarRef, (snapshot) => {
 	calendarLocation = snapshot.child('location').val();
 	ReactDOM.render(<Calendar disabled={calendarDisabled} />, document.getElementById(calendarLocation));
 })
+
+const motRef = ref(db, "modules/mail");
+var motDisabled, motLocation;
+onValue(motRef, (snapshot) => {
+	motDisabled = snapshot.child('disabled').val();
+	motLocation = snapshot.child('location').val();
+	ReactDOM.render(<Motivation disabled={motDisabled} />, document.getElementById(motLocation));
+})
+
 
 // ReactDOM.render(<Calendar/>, document.getElementById(3));
 
