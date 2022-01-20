@@ -51,7 +51,7 @@ onValue(calendarRef, (snapshot) => {
 	ReactDOM.render(<Calendar disabled={calendarDisabled} />, document.getElementById(calendarLocation));
 })
 
-const motRef = ref(db, "modules/mail");
+const motRef = ref(db, "modules/motivation");
 var motDisabled, motLocation;
 onValue(motRef, (snapshot) => {
 	motDisabled = snapshot.child('disabled').val();
