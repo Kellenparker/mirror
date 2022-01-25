@@ -19,6 +19,20 @@ request(clientServerOptions, function (error, response) {
 	return;
 });
 
+// index: 0 = clock, 1 = weather, 2 = calendar, 3 = motivation
+let locations = [null, null, null, null];
+
+function canLocate(type, location) {
+	if(location < 1 || location > 7) return false;
+	for(let i = 0; i < location.length; i++){
+		if(i === type) continue;
+		if(location === locations[i]){
+			return false;
+		}
+	}
+	return true;
+}
+
 const db = getDatabase();
 const scanStageRef = ref(db, "scan/stage");
 var scanStage;
@@ -32,7 +46,21 @@ var timeDisabled, timeLocation;
 onValue(timeRef, (snapshot) => {
 	timeDisabled = snapshot.child('disabled').val();
 	timeLocation = snapshot.child('location').val();
-	ReactDOM.render(<Clock disabled={timeDisabled} />, document.getElementById(timeLocation));
+	if(canLocate(0, timeLocation)){
+		if(locations[0] === null){
+			locations[0] = timeLocation;
+			ReactDOM.render(<Clock disabled={timeDisabled} />, document.getElementById(timeLocation));
+		}
+		else if(locations[0] != timeLocation){
+			console.log(timeLocation + " - " + locations[0])
+			ReactDOM.render(<Clock disabled={timeDisabled} />, document.getElementById(timeLocation));
+			ReactDOM.render(<div/>, document.getElementById(locations[0]));
+			locations[0] = timeLocation;
+		}
+	}
+	else {
+		console.log("Cannot move module there");
+	}
 })
 
 const weatherRef = ref(db, "modules/weather");
@@ -40,7 +68,20 @@ var weatherDisabled, weatherLocation;
 onValue(weatherRef, (snapshot) => {
 	weatherDisabled = snapshot.child('disabled').val();
 	weatherLocation = snapshot.child('location').val();
-	ReactDOM.render(<Weather disabled={weatherDisabled} />, document.getElementById(weatherLocation));
+	if(canLocate(1, weatherLocation)){
+		if(locations[1] === null){
+			locations[1] = weatherLocation;
+			ReactDOM.render(<Weather disabled={weatherDisabled} />, document.getElementById(weatherLocation));
+		}
+		else if(locations[1] != timeLocation){
+			ReactDOM.render(<Weather disabled={weatherDisabled} />, document.getElementById(weatherLocation));
+			ReactDOM.render(<div/>, document.getElementById(locations[1]));
+			locations[1] = weatherLocation;
+		}
+	}
+	else {
+		console.log("Cannot move module there");
+	}
 })
 
 const calendarRef = ref(db, "modules/calendar");
@@ -48,7 +89,20 @@ var calendarDisabled, calendarLocation;
 onValue(calendarRef, (snapshot) => {
 	calendarDisabled = snapshot.child('disabled').val();
 	calendarLocation = snapshot.child('location').val();
-	ReactDOM.render(<Calendar disabled={calendarDisabled} />, document.getElementById(calendarLocation));
+	if(canLocate(2, calendarLocation)){
+		if(locations[2] === null){
+			locations[2] = calendarLocation;
+			ReactDOM.render(<Calendar disabled={calendarDisabled} />, document.getElementById(calendarLocation));
+		}
+		else if(locations[2] != calendarLocation){
+			ReactDOM.render(<Calendar disabled={calendarDisabled} />, document.getElementById(calendarLocation));
+			ReactDOM.render(<div/>, document.getElementById(locations[2]));
+			locations[2] = calendarLocation;
+		}
+	}
+	else {
+		console.log("Cannot move module there");
+	}
 })
 
 const motRef = ref(db, "modules/motivation");
@@ -56,7 +110,20 @@ var motDisabled, motLocation;
 onValue(motRef, (snapshot) => {
 	motDisabled = snapshot.child('disabled').val();
 	motLocation = snapshot.child('location').val();
-	ReactDOM.render(<Motivation disabled={motDisabled} />, document.getElementById(motLocation));
+	if(canLocate(3, motLocation)){
+		if(locations[3] === null){
+			locations[3] = motLocation;
+			ReactDOM.render(<Motivation disabled={motDisabled} />, document.getElementById(motLocation));
+		}
+		else if(locations[3] != motLocation){
+			ReactDOM.render(<Motivation disabled={motDisabled} />, document.getElementById(motLocation));
+			ReactDOM.render(<div/>, document.getElementById(locations[3]));
+			locations[3] = motLocation;
+		}
+	}
+	else {
+		console.log("Cannot move module there");
+	}
 })
 
 

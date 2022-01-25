@@ -33,7 +33,7 @@ const quotes = ['"Life is about making an impact, not making an income."', '-Kev
                 '"The best revenge is massive success."', '-Frank Sinatra',
                 '"People often say that motivation doesn\'t last. Well, neither does bathing.  That\'s why we recommend it daily."', '-Zig Ziglar',
                 '"Life shrinks or expands in proportion to one\'s courage."', '-Anais Nin',
-                '"If you hear a voice within you say \"you cannot paint,\" then by all means paint and that voice will be silenced."', '-Vincent Van Gogh',
+                '"If you hear a voice within you say "you cannot paint," then by all means paint and that voice will be silenced."', '-Vincent Van Gogh',
                 '"There is only one way to avoid criticism: do nothing, say nothing, and be nothing."', '-Aristotle',
                 '"Ask and it will be given to you; search, and you will find; knock and the door will be opened for you."', '-Jesus',
                 '"The only person you are destined to become is the person you decide to be."', '-Ralph Waldo Emerson',
@@ -44,7 +44,7 @@ const quotes = ['"Life is about making an impact, not making an income."', '-Kev
                 '"Believe you can and you\'re halfway there."', '-Theodore Roosevelt',
                 '"Everything you\'ve ever wanted is on the other side of fear."', '-George Addair',
                 '"We can easily forgive a child who is afraid of the dark; the real tragedy of life is when men are afraid of the light."', '-Plato',
-                '"Teach thy tongue to say, \"I do not know,\" and thous shalt progress."', '-Maimonides',
+                '"Teach thy tongue to say, "I do not know," and thous shalt progress."', '-Maimonides',
                 '"Start where you are. Use what you have.  Do what you can."', '-Arthur Ashe',
                 '"When I was 5 years old, my mother always told me that happiness was the key to life.  When I went to school, they asked me what I wanted to be when I grew up.  I wrote down ‘happy\'.  They told me I didn\'t understand the assignment, and I told them they didn\'t understand life."', '-John Lennon',
                 '"Fall seven times and stand up eight."', '-Japanese Proverb',
@@ -99,15 +99,15 @@ const quotes = ['"Life is about making an impact, not making an income."', '-Kev
                 '"It\'s not the years in your life that count. It\'s the life in your years."', '-Abraham Lincoln',
                 '"Change your thoughts and you change your world."', '-Norman Vincent Peale',
                 '"Either write something worth reading or do something worth writing."', '-Benjamin Franklin',
-                '"Nothing is impossible, the word itself says, \"I\'m possible!\""', '-Audrey Hepburn',
+                '"Nothing is impossible, the word itself says, "I\'m possible!""', '-Audrey Hepburn',
                 '"The only way to do great work is to love what you do."', '-Steve Jobs',
                 '"If you can dream it, you can achieve it."', '-Zig Ziglar'];
 
-class Clock extends React.Component {
+class Motivation extends React.Component {
 	constructor(props) {
 		super(props);
         let ind = Math.floor(Math.random() * quotes.length);
-        if(ind % 2 != 0) ind--;
+        if(ind % 2 !== 0) ind--;
 		this.state = {
 			quote: quotes[ind],
             author: quotes[ind + 1]
@@ -124,7 +124,7 @@ class Clock extends React.Component {
 	}
 	tick() {
         let ind = Math.floor(Math.random() * quotes.length);
-        if(ind % 2 != 0) ind--;
+        if(ind % 2 !== 0) ind--;
 		this.setState({
 			quote: quotes[ind],
             author: quotes[ind + 1]
@@ -147,4 +147,4 @@ class Clock extends React.Component {
 	}
 }
 
-export default Clock;
+export default Motivation;
