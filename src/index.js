@@ -19,8 +19,8 @@ request(clientServerOptions, function (error, response) {
 	return;
 });
 
-// index: 0 = clock, 1 = weather, 2 = calendar, 3 = motivation
-let locations = [null, null, null, null];
+// index: 0 = clock, 1 = weather, 2 = calendar, 3 = motivation, 4 = notes
+let locations = [null, null, null, null, null];
 
 function canLocate(type, location) {
 	if(location < 1 || location > 7) return false;
@@ -126,9 +126,41 @@ onValue(motRef, (snapshot) => {
 	}
 })
 
-
-// ReactDOM.render(<Calendar/>, document.getElementById(3));
-
+const notesRef = ref(db, "modules/notes");
+var notesDisabled, notesLocation, notesText, notes;
+onValue(notesRef, (snapshot) => {
+    notesDisabled = snapshot.child('disabled').val();
+    notesLocation = snapshot.child('location').val();
+    notesText = snapshot.child('text').val();
+    if (notesDisabled == false){
+        notes = (
+            <div>
+            <p style={{
+                    fontSize: "25px",
+                    marginLeft: "1vh",
+                    fontFamily: "helvetica",
+                    whiteSpace: 'pre-wrap',
+                    fontWeight: "lighter"}}>{notesText}</p>
+            </div>
+        );
+    }
+	else notes = (<div></div>);
+	if(canLocate(4, notesLocation)){
+		if(locations[4] === null){
+			locations[4] = notesLocation;
+			ReactDOM.render(notes, document.getElementById(notesLocation));
+		}
+		else if(locations[4] != notesLocation){
+			ReactDOM.render(notes, document.getElementById(notesLocation));
+			ReactDOM.render(<div/>, document.getElementById(locations[4]));
+			locations[4] = notesLocation;
+		}
+	}
+	else {
+		console.log("Cannot move module there");
+	}
+    ReactDOM.render(notes, document.getElementById(notesLocation));
+})
 
 // Get capture value
 const captureRef = ref(db, "scan/camera/capture/");
