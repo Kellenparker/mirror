@@ -5,6 +5,8 @@ import Scan from './modules/Scan/Scan.js';
 import Weather from './modules/Weather/Weather.js'
 import Calendar from './modules/Calendar/Calendar.js'
 import Motivation from './modules/Motivation/Motivation.js'
+import News from './modules/News/News.js';
+//import Traffic from './modules/Traffic/Traffic.js';
 import { app } from './firebase.js';
 import { getDatabase, ref, onValue, set } from "firebase/database";
 var request = require('request');
@@ -19,8 +21,8 @@ request(clientServerOptions, function (error, response) {
 	return;
 });
 
-// index: 0 = clock, 1 = weather, 2 = calendar, 3 = motivation, 4 = notes
-let locations = [null, null, null, null, null];
+// index: 0 = clock, 1 = weather, 2 = calendar, 3 = motivation, 4 = notes, 5 = news, 6 = traffic
+let locations = [null, null, null, null, null, null, null];
 
 function canLocate(type, location) {
 	if(location < 1 || location > 7) return false;
@@ -161,6 +163,48 @@ onValue(notesRef, (snapshot) => {
 	}
     ReactDOM.render(notes, document.getElementById(notesLocation));
 })
+
+const newsRef = ref(db, "modules/news");
+var newsDisabled, newsLocation;
+onValue(newsRef, (snapshot) => {
+	newsDisabled = snapshot.child('disabled').val();
+	newsLocation = snapshot.child('location').val();
+	if(canLocate(5, newsLocation)){
+		if(locations[5] === null){
+			locations[5] = newsLocation;
+			ReactDOM.render(<News disabled={newsDisabled} />, document.getElementById(newsLocation));
+		}
+		else if(locations[5] != newsLocation){
+			ReactDOM.render(<News disabled={newsDisabled} />, document.getElementById(newsLocation));
+			ReactDOM.render(<div/>, document.getElementById(locations[3]));
+			locations[5] = newsLocation;
+		}
+	}
+	else {
+		console.log("Cannot move module there");
+	}
+})
+/*
+const traRef = ref(db, "modules/traffic");
+var traDisabled, traLocation;
+onValue(traRef, (snapshot) => {
+	traDisabled = snapshot.child('disabled').val();
+	traLocation = snapshot.child('location').val();
+	if(canLocate(6, traLocation)){
+		if(locations[6] === null){
+			locations[6] = traLocation;
+			ReactDOM.render(<Traffic disabled={traDisabled} />, document.getElementById(traLocation));
+		}
+		else if(locations[6] != traLocation){
+			ReactDOM.render(<Traffic disabled={traDisabled} />, document.getElementById(traLocation));
+			ReactDOM.render(<div/>, document.getElementById(locations[3]));
+			locations[6] = traLocation;
+		}
+	}
+	else {
+		console.log("Cannot move module there");
+	}
+})*/
 
 // Get capture value
 const captureRef = ref(db, "scan/camera/capture/");

@@ -166,8 +166,7 @@ class Weather extends React.Component {
 							fontSize: "15px",
 							marginLeft: "1vh",
 							fontFamily: "helvetica",
-							fontWeight: "lighter",
-							marginTop: "-1vh"}}>{parseInt(this.state.day1.high) + "°F"}</p>
+							fontWeight: "lighter"}}>{parseInt(this.state.day1.high) + "°F"}</p>
 						<p style={{
 							fontSize: "15px",
 							marginLeft: "1vh",
@@ -187,8 +186,7 @@ class Weather extends React.Component {
 							fontSize: "15px",
 							marginLeft: "1vh",
 							fontFamily: "helvetica",
-							fontWeight: "lighter",
-							marginTop: "-1vh"}}>{parseInt(this.state.day2.high) + "°F"}</p>
+							fontWeight: "lighter"}}>{parseInt(this.state.day2.high) + "°F"}</p>
 						<p style={{
 							fontSize: "15px",
 							marginLeft: "1vh",
@@ -208,8 +206,7 @@ class Weather extends React.Component {
 							fontSize: "15px",
 							marginLeft: "1vh",
 							fontFamily: "helvetica",
-							fontWeight: "lighter",
-							marginTop: "-1vh"}}>{parseInt(this.state.day3.high) + "°F"}</p>
+							fontWeight: "lighter"}}>{parseInt(this.state.day3.high) + "°F"}</p>
 						<p style={{
 							fontSize: "15px",
 							marginLeft: "1vh",
@@ -229,8 +226,7 @@ class Weather extends React.Component {
 							fontSize: "15px",
 							marginLeft: "1vh",
 							fontFamily: "helvetica",
-							fontWeight: "lighter",
-							marginTop: "-1vh"}}>{parseInt(this.state.day4.high) + "°F"}</p>
+							fontWeight: "lighter"}}>{parseInt(this.state.day4.high) + "°F"}</p>
 						<p style={{
 							fontSize: "15px",
 							marginLeft: "1vh",
