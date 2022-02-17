@@ -2,10 +2,13 @@
 
 .triple-spinner {
   display: block;
-  position: relative;
-  width: 45vh;
-  height: 45vh;
-  left: 20vh;
+  position: absolute;
+  width: 60vh;
+  height: 60vh;
+  margin: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
   margin-top: 12vh;
   border-radius: 50%;
   border: 6px solid transparent;

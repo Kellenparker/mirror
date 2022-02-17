@@ -21,6 +21,24 @@ class Scan extends React.Component {
 				<div className='triple-spinner' style={{
 					opacity: this.props.stage === 2 ? '1' : '0'
 				}}></div>
+				<img src={`data:image/png;base64,${this.props.image}`} style={{
+					position: "absolute",
+					margin: "auto",
+					left: '0',
+					right: '0',
+					textAlign: 'center',
+					top: '42%',
+					opacity: this.props.stage === 2 ? '1' : '0'
+				}} alt="img"></img>
+				<p style={{
+					position: "absolute",
+					margin: "auto",
+					left: '0',
+					right: '0',
+					textAlign: 'center',
+					top: '80%',
+					opacity: this.props.stage === 2 ? '1' : '0'
+				}}>Continue?</p>
 				<img style={{
 					position: 'relative',
 					display: 'inline-block',

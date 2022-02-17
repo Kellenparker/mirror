@@ -52,7 +52,7 @@ class Calendar extends React.Component {
 	componentDidMount() {
 		this.interval = setInterval(
 			() => this.updateCalendar(),
-			3000
+			30000
 		);
 	}
 
@@ -63,7 +63,7 @@ class Calendar extends React.Component {
 	async getCalendar() {
 		try {
 			const response = await fetch("https://www.googleapis.com/calendar/v3/calendars/mirrorsquaredllc%40gmail.com/events?key=" + this.key + "&singleEvents=true&orderBy=startTime&maxResults=5&timeMin=" + this.currentDate + "T00:00:00-06", {
-				method: 'GET',
+                method: 'GET',
 				credentials: 'same-origin'
 			});
 			const obj = await response.json();
@@ -251,10 +251,11 @@ class Calendar extends React.Component {
                 }
             }
             if(data.items[counter].start.hasOwnProperty('date')){
-                var eventDate = new Date (data.items[counter].start.date);
-                let month = months[eventDate.getMonth()];
-                var day = eventDate.getDate() + 1;
-                var dow = days[eventDate.getDay()];
+                var eventDate2 = new Date (data.items[counter].start.date);
+                eventDate2.setDate(eventDate2.getDate() + 1);
+                let month2 = months[eventDate2.getMonth()];
+                var day2 = eventDate2.getDate();
+                var dow2 = days[eventDate2.getDay()];
                 this.setState({
                     label: {
                         events: "Upcoming Events"
@@ -264,8 +265,8 @@ class Calendar extends React.Component {
                     case 0:
                         this.setState({
                             event1: {
-                                date: ", " + month + " " + day + " ",
-                                dow: dow,
+                                date: ", " + month2 + " " + day2 + " ",
+                                dow: dow2,
                                 time: "(All Day)",
                                 summary: data.items[counter].summary
                             }
@@ -274,8 +275,8 @@ class Calendar extends React.Component {
                     case 1:
                         this.setState({
                             event2: {
-                                date: ", " + month + " " + day + " ",
-                                dow: dow,
+                                date: ", " + month2 + " " + day2 + " ",
+                                dow: dow2,
                                 time: "(All Day)",
                                 summary: data.items[counter].summary
                             }
@@ -284,8 +285,8 @@ class Calendar extends React.Component {
                     case 2:
                         this.setState({
                             event3: {
-                                date: ", " + month + " " + day + " ",
-                                dow: dow,
+                                date: ", " + month2 + " " + day2 + " ",
+                                dow: dow2,
                                 time: "(All Day)",
                                 summary: data.items[counter].summary
                             }
@@ -294,8 +295,8 @@ class Calendar extends React.Component {
                     case 3:
                         this.setState({
                             event4: {
-                                date: ", " + month + " " + day + " ",
-                                dow: dow,
+                                date: ", " + month2 + " " + day2 + " ",
+                                dow: dow2,
                                 time: "(All Day)",
                                 summary: data.items[counter].summary
                             }
@@ -304,8 +305,8 @@ class Calendar extends React.Component {
                     case 4:
                         this.setState({
                             event5: {
-                                date: ", " + month + " " + day + " ",
-                                dow: dow,
+                                date: ", " + month2 + " " + day2 + " ",
+                                dow: dow2,
                                 time: "(All Day)",
                                 summary: data.items[counter].summary
                             }
@@ -331,7 +332,9 @@ class Calendar extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div style={{
+                height: "95%",
+                overflow: "scroll"}}>
                 <p style={{
                     fontSize: "25px",
                     marginLeft: "1vh",

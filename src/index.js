@@ -37,10 +37,14 @@ function canLocate(type, location) {
 
 const db = getDatabase();
 const scanStageRef = ref(db, "scan/stage");
+const imgRef = ref(db, "scan/img");
 var scanStage;
-onValue(scanStageRef, (snapshot) => {
-	scanStage = snapshot.val();
-	ReactDOM.render(<Scan stage={scanStage}/>, document.getElementById('mid2'));
+onValue(scanStageRef, (scansnap) => {
+	scanStage = scansnap.val();
+	onValue(imgRef, (imgsnap) => {
+		let img = imgsnap.val();
+		ReactDOM.render(<Scan stage={scanStage} image={img}/>, document.getElementById('mid2'));
+	})
 })
 
 const timeRef = ref(db, "modules/time");
@@ -136,13 +140,13 @@ onValue(notesRef, (snapshot) => {
     notesText = snapshot.child('text').val();
     if (notesDisabled == false){
         notes = (
-            <div>
-            <p style={{
-                    fontSize: "25px",
-                    marginLeft: "1vh",
-                    fontFamily: "helvetica",
-                    whiteSpace: 'pre-wrap',
-                    fontWeight: "lighter"}}>{notesText}</p>
+            <div style={{height: "100%", overflow: "scroll"}}>
+				<p style={{
+						fontSize: "25px",
+						marginLeft: "1vh",
+						fontFamily: "helvetica",
+						whiteSpace: 'pre-wrap',
+						fontWeight: "lighter"}}>{notesText}</p>
             </div>
         );
     }

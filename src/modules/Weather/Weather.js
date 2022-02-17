@@ -140,11 +140,13 @@ class Weather extends React.Component {
 	}
 	render() {
 		return (
-			<div>
+			<div style={{
+                height: "95%",
+                overflow: "scroll"}}>
 				<div>
 					<i className={"wi wi-" + this.getConditions(this.state.current.id)} style={{
-						fontSize: "100px", 
-						marginTop: "1vh"}}></i>
+						fontSize: "80px", 
+						marginTop: "2vh"}}></i>
 					<p style={{
 						fontSize: "40px", 
 						display: "inline-block",
@@ -177,7 +179,8 @@ class Weather extends React.Component {
 					<div style={{display: "inline-block", width: "8vh"}}>
 						<p style={{
 							fontSize: "15px",
-							marginLeft: "1vh",
+							marginLeft: "0vh",
+							textAlign: "center",
 							fontFamily: "helvetica",
 							fontWeight: "lighter"}}>{this.getDoW(1)}</p>
 						<i className={"wi wi-" + this.getConditions(this.state.day2.id)} style={{

@@ -49,7 +49,7 @@ class Traffic extends React.Component {
     }
     render() {
         return ( 
-            <div>
+            <div style={{height: "100%", overflow: "scroll"}}>
                 <p style={{
                     fontSize: "30px",
                     marginLeft: "1vh",

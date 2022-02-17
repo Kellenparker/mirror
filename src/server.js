@@ -227,6 +227,8 @@ app.get('/capture', function (req, res) {
 		await imageToBase64(`${__dirname}/capture/img.jpg`)
 			.then((response) => {
 				img = response;
+				const imgRef = ref(db, 'scan/img');
+				set(imgRef, img);
 			});
 
 		// Create request for annotateImage
