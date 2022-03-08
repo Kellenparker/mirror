@@ -53,7 +53,11 @@ class News extends React.Component {
     }
     render() {
         return ( 
-            <div style={{height: "100%", overflow: "scroll"}}>
+            <div style={{
+                height: "100%", 
+                overflow: "scroll",
+                opacity: this.props.disabled ? '0' : '1'
+            }}>
                 <p style={{
                     fontSize: "30px",
                     marginLeft: "1vh",

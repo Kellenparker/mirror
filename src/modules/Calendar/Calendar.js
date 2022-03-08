@@ -334,7 +334,8 @@ class Calendar extends React.Component {
 		return (
 			<div style={{
                 height: "95%",
-                overflow: "scroll"}}>
+                overflow: "scroll",
+				opacity: this.props.disabled ? '0' : '1'}}>
                 <p style={{
                     fontSize: "25px",
                     marginLeft: "1vh",

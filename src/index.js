@@ -52,21 +52,7 @@ var timeDisabled, timeLocation;
 onValue(timeRef, (snapshot) => {
 	timeDisabled = snapshot.child('disabled').val();
 	timeLocation = snapshot.child('location').val();
-	if(canLocate(0, timeLocation)){
-		if(locations[0] === null){
-			locations[0] = timeLocation;
-			ReactDOM.render(<Clock disabled={timeDisabled} />, document.getElementById(timeLocation));
-		}
-		else if(locations[0] != timeLocation){
-			console.log(timeLocation + " - " + locations[0])
-			ReactDOM.render(<Clock disabled={timeDisabled} />, document.getElementById(timeLocation));
-			ReactDOM.render(<div/>, document.getElementById(locations[0]));
-			locations[0] = timeLocation;
-		}
-	}
-	else {
-		console.log("Cannot move module there");
-	}
+	ReactDOM.render(<Clock disabled={timeDisabled} />, document.getElementById(timeLocation));
 })
 
 const weatherRef = ref(db, "modules/weather");
@@ -84,6 +70,7 @@ onValue(weatherRef, (snapshot) => {
 			ReactDOM.render(<div/>, document.getElementById(locations[1]));
 			locations[1] = weatherLocation;
 		}
+		ReactDOM.render(<Weather disabled={weatherDisabled} />, document.getElementById(weatherLocation));
 	}
 	else {
 		console.log("Cannot move module there");
@@ -105,6 +92,7 @@ onValue(calendarRef, (snapshot) => {
 			ReactDOM.render(<div/>, document.getElementById(locations[2]));
 			locations[2] = calendarLocation;
 		}
+		ReactDOM.render(<Calendar disabled={calendarDisabled} />, document.getElementById(calendarLocation));
 	}
 	else {
 		console.log("Cannot move module there");
@@ -126,6 +114,7 @@ onValue(motRef, (snapshot) => {
 			ReactDOM.render(<div/>, document.getElementById(locations[3]));
 			locations[3] = motLocation;
 		}
+		ReactDOM.render(<Motivation disabled={motDisabled} />, document.getElementById(motLocation));
 	}
 	else {
 		console.log("Cannot move module there");
@@ -183,6 +172,7 @@ onValue(newsRef, (snapshot) => {
 			ReactDOM.render(<div/>, document.getElementById(locations[3]));
 			locations[5] = newsLocation;
 		}
+		ReactDOM.render(<News disabled={newsDisabled} />, document.getElementById(newsLocation));
 	}
 	else {
 		console.log("Cannot move module there");

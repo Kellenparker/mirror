@@ -142,7 +142,8 @@ class Weather extends React.Component {
 		return (
 			<div style={{
                 height: "95%",
-                overflow: "scroll"}}>
+                overflow: "scroll",
+				opacity: this.props.disabled ? '0' : '1'}}>
 				<div>
 					<i className={"wi wi-" + this.getConditions(this.state.current.id)} style={{
 						fontSize: "80px", 
