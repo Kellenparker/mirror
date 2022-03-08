@@ -43,7 +43,7 @@ class Scan extends React.Component {
 					position: 'relative',
 					display: 'inline-block',
 					zIndex: '9',
-					marginTop: '-13vh',
+					marginTop: '10vh',
 					opacity: this.props.stage === 1 ? '1' : '0'
 				}} src={outline} alt="outline" />
 			</div>

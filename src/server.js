@@ -57,11 +57,11 @@ app.get("/traffic", function (req, res) {
     axios(config)
         .then(function (response) {
             console.log(JSON.stringify(response.data));
+			app.send(response.data);
         })
         .catch(function (error) {
             console.log(error);
         });
-
 	
 })
 

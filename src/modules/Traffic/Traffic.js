@@ -12,7 +12,6 @@ class Traffic extends React.Component {
                 distance: "",
             },
         };
-        
     }
     componentDidMount() {
         this.interval = setInterval(() => this.updateTraffic(), 30000);
@@ -21,33 +20,23 @@ class Traffic extends React.Component {
         clearInterval(this.interval);
     }
     async getTraffic() {
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        try {
-            const response = await fetch(
-                "https://maps.googleapis.com/maps/api/distancematrix/json?destinations=40.659569%2C-73.933783%7C40.729029%2C-73.851524%7C40.6860072%2C-73.6334271%7C40.598566%2C-73.7527626&origins=40.6655101%2C-73.89188969999998&key=" +
-                    this.key,
-                {
-                    method: "GET",
-                    credentials: "same-origin",
-                    headers: {
-                        "Access-Control-Allow-Origin": "*",
-                        "Access-Control-Allow-Methods": "GET",
-                    },
-                }
-            );
-            const obj = await response.json();
-            console.log(obj);
-            return obj;
-        } catch (error) {}
+        var clientServerOptions = {
+			uri: 'http://localhost:3001/traffic',
+		};
+		request(clientServerOptions, function (error, response) {
+			console.log(error, response);
+			return;
+		});
+
     }
     async updateTraffic() {
-        const data = await this.getTraffic();
-        this.setState({
-            traffic: {
-                time: data.rows.elements.duration.text,
-                distance: data.rows.elements.distance.text,
-            },
-        });
+        var clientServerOptions = {
+			uri: 'http://localhost:3001/traffic',
+		};
+		request(clientServerOptions, function (error, response) {
+			console.log(error, response);
+			return;
+		});
     }
     render() {
         return (
