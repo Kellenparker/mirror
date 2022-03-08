@@ -129,7 +129,7 @@ onValue(notesRef, (snapshot) => {
     notesText = snapshot.child('text').val();
     if (notesDisabled == false){
         notes = (
-            <div style={{height: "100%", overflow: "scroll"}}>
+            <div style={{height: "100%", overflow: "hidden"}}>
 				<p style={{
 						fontSize: "25px",
 						marginLeft: "1vh",

@@ -12,6 +12,7 @@ class Traffic extends React.Component {
                 distance: "",
             },
         };
+        
     }
     componentDidMount() {
         this.interval = setInterval(() => this.updateTraffic(), 30000);
@@ -53,7 +54,7 @@ class Traffic extends React.Component {
             <div
                 style={{
                     height: "100%",
-                    overflow: "scroll",
+                    overflow: "hidden",
                     opacity: this.props.disabled ? "0" : "1",
                 }}
             >
