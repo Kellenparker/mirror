@@ -44,9 +44,6 @@ app.listen(port, () => {
 });
 
 app.get("/traffic", function (req, res) {
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-
     var axios = require("axios");
     var config = {
         method: "get",
@@ -57,7 +54,7 @@ app.get("/traffic", function (req, res) {
     axios(config)
         .then(function (response) {
             console.log(JSON.stringify(response.data));
-			app.send(response.data);
+			res.send(response.data);
         })
         .catch(function (error) {
             console.log(error);
