@@ -1,8 +1,5 @@
 const express = require("express");
 const PiCamera = require("pi-camera");
-const { spawn } = require("child_process");
-const { Storage } = require("@google-cloud/storage");
-const { initializeApp } = require("firebase/app");
 const { getDatabase, ref, onValue, set, update } = require("firebase/database");
 const imageToBase64 = require("image-to-base64");
 const {
@@ -11,8 +8,6 @@ const {
 } = require("unofficial-amazon-search");
 const app = express();
 const cors = require("cors");
-const { noConflict } = require("jquery");
-const { forInStatement } = require("@babel/types");
 const fs = require("fs");
 const readline = require("readline");
 const { google } = require("googleapis");
@@ -53,7 +48,6 @@ app.get("/traffic", function (req, res) {
 
     axios(config)
         .then(function (response) {
-            console.log(JSON.stringify(response.data));
 			res.send(response.data);
         })
         .catch(function (error) {
