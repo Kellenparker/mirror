@@ -1,4 +1,5 @@
 import React from 'react';
+import { getDatabase, ref, onValue, set } from "firebase/database";
 
 const quotes = ['"Life is about making an impact, not making an income."', '-Kevin Kruse',
                 '"Whatever the mind of man can conceive and believe, it can achieve."', '-Napoleon Hill',
@@ -131,6 +132,13 @@ class Motivation extends React.Component {
 		});
 	}
 	render() {
+        const db = getDatabase();
+        const motRef = ref(db, "modules/motivation/text/");
+        set (motRef, {
+                text: "In order to arrive at " + this.hour 
+            + " " + minute + ampm + " to your desired destination, you must leave by " 
+            + this.state.hour + " " + minute2 + ampm2
+        });
 		return (
 			<div style={{
 				color: "white",

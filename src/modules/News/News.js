@@ -1,4 +1,5 @@
 import React from 'react';
+import { getDatabase, ref, onValue, set } from "firebase/database";
 
 class News extends React.Component {
     constructor(props) {
@@ -52,6 +53,13 @@ class News extends React.Component {
         }
     }
     render() {
+        const db = getDatabase();
+        const nRef = ref(db, "modules/news/text/");
+        set (nRef, {
+                text: "In order to arrive at " + this.hour 
+            + " " + minute + ampm + " to your desired destination, you must leave by " 
+            + this.state.hour + " " + minute2 + ampm2
+        });
         return ( 
             <div style={{
                 height: "100%", 

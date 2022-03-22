@@ -1,4 +1,5 @@
 import React from 'react';
+import { getDatabase, ref, onValue, set } from "firebase/database";
 
 class Calendar extends React.Component {
 	constructor(props) {
@@ -331,6 +332,13 @@ class Calendar extends React.Component {
     }
 
 	render() {
+        const db = getDatabase();
+        const cRef = ref(db, "modules/calendar/text/");
+        set (cRef, {
+                text: "In order to arrive at " + this.hour 
+            + " " + minute + ampm + " to your desired destination, you must leave by " 
+            + this.state.hour + " " + minute2 + ampm2
+        });
 		return (
 			<div style={{
                 height: "95%",

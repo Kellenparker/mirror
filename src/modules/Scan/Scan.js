@@ -1,5 +1,6 @@
 import React from 'react';
 import outline from './assets/human.png';
+import { getDatabase, ref, onValue, set } from "firebase/database";
 import './spinner.css';
 
 class Scan extends React.Component {
@@ -7,6 +8,13 @@ class Scan extends React.Component {
 		super(props);
 	}
 	render() {
+        // const db = getDatabase();
+        // const trafRef = ref(db, "traffic/text/");
+		// set (trafRef, {
+		// 		text: "In order to arrive at " + this.hour 
+		// 	+ " " + minute + ampm + " to your desired destination, you must leave by " 
+		// 	+ this.state.hour + " " + minute2 + ampm2
+		// });
 		return (
 			<div style={{
 				color: "white",

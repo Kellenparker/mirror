@@ -1,4 +1,5 @@
 import React from 'react';
+import { getDatabase, ref, onValue, set } from "firebase/database";
 import './icons/css/weather-icons.css'
 
 class Weather extends React.Component {
@@ -139,6 +140,13 @@ class Weather extends React.Component {
 		return names[day];
 	}
 	render() {
+        const db = getDatabase();
+        const wRef = ref(db, "modules/weather/text/");
+		set (wRef, {
+				text: "In order to arrive at " + this.hour 
+			+ " " + minute + ampm + " to your desired destination, you must leave by " 
+			+ this.state.hour + " " + minute2 + ampm2
+		});
 		return (
 			<div style={{
                 height: "95%",
