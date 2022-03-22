@@ -178,7 +178,6 @@ onValue(notesRef, (snapshot) => {
 	else {
 		console.log("Cannot move module there");
 	}
-    ReactDOM.render(notes, document.getElementById(notesLocation));
 })
 
 const newsRef = ref(db, "modules/news");
