@@ -69,9 +69,13 @@ class Traffic extends React.Component {
 		this.hour -= 12;
 		ampm = "PM";
 	}
-	var minute
+	if(this.hour === 0)
+	    this.hour = 12;
+
+	var minute = this.minute
 	if(this.minute < 10)
 	    minute = "0" + this.minute;
+
 	var ampm2 = "AM"
 	if(this.state.hour > 12) {
 		this.state.hour -= 12;
@@ -79,7 +83,8 @@ class Traffic extends React.Component {
 	}
 	if(this.state.hour === 0)
 	    this.state.hour = 12;
-	var minute2
+
+	var minute2 = this.state.minute
 	if(this.state.minute < 10)
 	    minute2 = "0" + this.state.minute;
 	

@@ -335,9 +335,10 @@ class Calendar extends React.Component {
         const db = getDatabase();
         const cRef = ref(db, "modules/calendar/text/");
         set (cRef, {
-                text: "In order to arrive at " + this.hour 
-            + " " + minute + ampm + " to your desired destination, you must leave by " 
-            + this.state.hour + " " + minute2 + ampm2
+                text: "Your upcoming events are, " + this.state.event1.dow + " " + this.state.event1.date + ", " + 
+		this.state.event1.summary + ". On " + this.state.event2.dow + " " + this.state.event2.date + 
+		 ", " + this.state.event2.summary + ". And on " + this.state.event3.dow + " " + 
+		this.state.event3.date + ", " + this.state.event3.summary + "." 
         });
 		return (
 			<div style={{

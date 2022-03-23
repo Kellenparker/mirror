@@ -52,11 +52,22 @@ class Clock extends React.Component {
 	}
 	render() {
         const db = getDatabase();
-        const cRef = ref(db, "modules/clock/text/");
+        const cRef = ref(db, "modules/time/text/");
+		var ampm = "AM"
+		var hour = this.state.hour
+		if(this.state.hour > 12) {
+			hour = this.state.hour - 12;
+			ampm = "PM";
+		}
+		if (this.state.hour === 0)
+			hour = 12;
+		var minute = this.state.minute
+		if(this.state.minute < 10)
+			minute = "0" + this.state.minute;
 		set (cRef, {
-				text: "In order to arrive at " + this.hour 
-			+ " " + minute + ampm + " to your desired destination, you must leave by " 
-			+ this.state.hour + " " + minute2 + ampm2
+				text: "Today is  " + this.monthName(this.state.month) + " " + this.state.day + 
+			this.extension(this.state.day) + " " + this.state.year + ". The current time is " +
+			hour + " " + minute + " " + ampm + "."
 		});
 		return (
 			<div style={{

@@ -8,13 +8,7 @@ class Scan extends React.Component {
 		super(props);
 	}
 	render() {
-        // const db = getDatabase();
-        // const trafRef = ref(db, "traffic/text/");
-		// set (trafRef, {
-		// 		text: "In order to arrive at " + this.hour 
-		// 	+ " " + minute + ampm + " to your desired destination, you must leave by " 
-		// 	+ this.state.hour + " " + minute2 + ampm2
-		// });
+        const db = getDatabase();
 		return (
 			<div style={{
 				color: "white",

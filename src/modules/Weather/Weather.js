@@ -143,9 +143,10 @@ class Weather extends React.Component {
         const db = getDatabase();
         const wRef = ref(db, "modules/weather/text/");
 		set (wRef, {
-				text: "In order to arrive at " + this.hour 
-			+ " " + minute + ampm + " to your desired destination, you must leave by " 
-			+ this.state.hour + " " + minute2 + ampm2
+				text: "Today's forecast is, " + this.getConditions(this.state.day1.id) + 
+			" with a high of " + parseInt(this.state.day1.high) + 
+			"°F, a low of " + parseInt(this.state.day1.low) + 
+			"°F, but the current temperature is " + parseInt(this.state.current.temp) + "°F." 
 		});
 		return (
 			<div style={{

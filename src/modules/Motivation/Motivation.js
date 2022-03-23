@@ -117,7 +117,7 @@ class Motivation extends React.Component {
 	componentDidMount() {
 		this.interval = setInterval(
 			() => this.tick(),
-			300000
+			600000
 		);
 	}
 	componentWillUnmount() {
@@ -133,13 +133,11 @@ class Motivation extends React.Component {
 	}
 	render() {
         const db = getDatabase();
-        const motRef = ref(db, "modules/motivation/text/");
-        set (motRef, {
-                text: "In order to arrive at " + this.hour 
-            + " " + minute + ampm + " to your desired destination, you must leave by " 
-            + this.state.hour + " " + minute2 + ampm2
-        });
-		return (
+	const motivRef = ref(db, "modules/motivation/text/");
+	set(motivRef, {
+		text: "Need some motivation today? Remember, " + this.state.author + " once said, " + this.state.quote
+	});
+	return (
 			<div style={{
 				color: "white",
 				fontFamily: "helvetica",

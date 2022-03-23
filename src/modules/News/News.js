@@ -17,7 +17,7 @@ class News extends React.Component {
     componentDidMount() {
         this.interval = setInterval(
             () => this.updateNews(),
-            30000
+            60000
         );
     }
     componentWillUnmount() {
@@ -54,12 +54,11 @@ class News extends React.Component {
     }
     render() {
         const db = getDatabase();
-        const nRef = ref(db, "modules/news/text/");
-        set (nRef, {
-                text: "In order to arrive at " + this.hour 
-            + " " + minute + ampm + " to your desired destination, you must leave by " 
-            + this.state.hour + " " + minute2 + ampm2
-        });
+        const newsRef = ref(db, "modules/news/text/");
+        set(newsRef, {
+		text: "On today's top news there is, " + this.state.article.title  + 
+		this.state.article.description
+	});
         return ( 
             <div style={{
                 height: "100%", 
