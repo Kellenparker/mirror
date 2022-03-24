@@ -179,7 +179,7 @@ onValue(notesRef, (snapshot) => {
 		console.log("Cannot move module there");
 	}
 })
-
+/*
 const newsRef = ref(db, "modules/news");
 var newsDisabled, newsLocation;
 onValue(newsRef, (snapshot) => {
@@ -206,7 +206,7 @@ onValue(newsRef, (snapshot) => {
 	else {
 		console.log("Cannot move module there");
 	}
-})
+})*/
 
 const traRef = ref(db, "modules/traffic");
 var traDisabled, traLocation;

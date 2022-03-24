@@ -29,6 +29,8 @@ class Scan extends React.Component {
 					left: '0',
 					right: '0',
 					textAlign: 'center',
+					maxHeight: '300px',
+					maxWidth: '300px',
 					top: '42%',
 					opacity: this.props.stage === 2 ? '1' : '0'
 				}} alt="img"></img>

@@ -17,7 +17,7 @@ class News extends React.Component {
     componentDidMount() {
         this.interval = setInterval(
             () => this.updateNews(),
-            60000
+            500000
         );
     }
     componentWillUnmount() {

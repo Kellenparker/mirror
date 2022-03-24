@@ -33,7 +33,7 @@ class Weather extends React.Component {
 				id: 0
 			},
 		};
-		this.key = '76d2f48a1f2ac2166008d7fc456adf88';
+		this.key = '77cdf28617fe90dbf251d34b33a89144';
 		this.updateWeather();
 		this.getConditions = this.getConditions.bind(this);
 		this.getDoW = this.getDoW.bind(this);
@@ -41,7 +41,7 @@ class Weather extends React.Component {
 	componentDidMount() {
 		this.interval = setInterval(
 			() => this.updateWeather(),
-			30000
+			300000
 		);
 	}
 	componentWillUnmount() {
