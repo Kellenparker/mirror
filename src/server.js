@@ -43,10 +43,17 @@ app.listen(port, () => {
 });
 
 app.get("/traffic", function (req, res) {
+    const db = getDatabase();
+    const trafficRef = ref(db, "modules/traffic");
+    var source, destination;
+    onValue(trafficRef, (snapshot) => {
+        source = snapshot.child('source').val();
+        destination = snapshot.child('destination').val();
+    })
     var axios = require("axios");
     var config = {
         method: "get",
-        url: "https://maps.googleapis.com/maps/api/distancematrix/json?origins=Washington%2C%20DC&destinations=New%20York%20City%2C%20NY&units=imperial&key=AIzaSyAvxC1YthC5IKPeJC1T95xaw7JEvBczrJ0",
+        url: "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + source + "&destinations=" + destination + "&units=imperial&key=AIzaSyAvxC1YthC5IKPeJC1T95xaw7JEvBczrJ0",
         headers: {},
     };
 
