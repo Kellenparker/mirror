@@ -458,7 +458,7 @@ app.get("/capture", function (req, res) {
 
                         // Set scan stage to 3 to update UI
                         update(ref(db, "scan"), {
-                            stage: 3,
+                            stage: 4,
                         });
 
                         setTimeout(function () {

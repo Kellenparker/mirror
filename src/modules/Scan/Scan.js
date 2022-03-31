@@ -18,10 +18,10 @@ class Scan extends React.Component {
 				textAlign: "center",
 			}}>
 				<h3>{this.props.stage === 1 ? 'Please Center Yourself' : 
-					 this.props.stage === 2 ? 'Generating Recommendations...' : 
-					 this.props.stage === 3 ? 'Scanning Complete!' : ''}</h3>
+					 this.props.stage === 3 ? 'Generating Recommendations...' : 
+					 this.props.stage === 4 ? 'Scanning Complete!' : ''}</h3>
 				<div className='triple-spinner' style={{
-					opacity: this.props.stage === 2 ? '1' : '0'
+					opacity: this.props.stage === 2 || this.props.stage === 3 ? '1' : '0'
 				}}></div>
 				<img src={`data:image/png;base64,${this.props.image}`} style={{
 					position: "absolute",
@@ -32,7 +32,7 @@ class Scan extends React.Component {
 					maxHeight: '300px',
 					maxWidth: '300px',
 					top: '42%',
-					opacity: this.props.stage === 2 ? '1' : '0'
+					opacity: this.props.stage === 2 || this.props.stage === 3 ? '1' : '0'
 				}} alt="img"></img>
 				<p style={{
 					position: "absolute",
