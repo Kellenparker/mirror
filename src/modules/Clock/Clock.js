@@ -66,7 +66,7 @@ class Clock extends React.Component {
 			minute = "0" + this.state.minute;
 		set (cRef, {
 				text: "Today is  " + this.monthName(this.state.month) + " " + this.state.day + 
-			this.extension(this.state.day) + " " + this.state.year + ". The current time is " +
+			this.extension(this.state.day) + " " + this.state.year + ". And the current time is " +
 			hour + " " + minute + " " + ampm + "."
 		});
 		return (
