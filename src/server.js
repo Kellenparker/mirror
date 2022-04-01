@@ -100,11 +100,6 @@ app.get("/capture", function (req, res) {
     // Load database
     const db = getDatabase();
 
-    // Set scan stage to 2 to update UI
-    update(ref(db, "scan"), {
-        stage: 2,
-    });
-
     // Captures an image using raspberry pi camera
     const myCamera = new PiCamera({
         mode: "photo",
@@ -317,6 +312,11 @@ app.get("/capture", function (req, res) {
             img = response;
             const imgRef = ref(db, "scan/img");
             set(imgRef, img);
+        });
+
+        // Set scan stage to 2 to update UI
+        update(ref(db, "scan"), {
+            stage: 2,
         });
 
         // Create request for annotateImage
