@@ -2,10 +2,13 @@ const express = require("express");
 const PiCamera = require("pi-camera");
 const { getDatabase, ref, onValue, set, update } = require("firebase/database");
 const imageToBase64 = require("image-to-base64");
-const {
+/*const {
     searchAmazon,
     AmazonSearchResult,
 } = require("unofficial-amazon-search");
+*/
+const SerpApi = require('google-search-results-nodejs');
+const search = new SerpApi.GoogleSearch("1ddcfec971878897acb77777350a952cedd2b48df96441783d389c7591584cb5");
 const { initializeApp } = require('firebase/app');
 const app = express();
 const cors = require("cors");
@@ -428,17 +431,28 @@ app.get("/capture", function (req, res) {
 
                     console.log(searchStr);
 
-                    // Grab amazon search results using search strings
-                    let results = searchAmazon(searchStr).then((data) => {
-                        const linksRef = ref(db, "scan/links");
-
-                        // console.log(data);
+                    search.json({
+                        q: searchStr,
+                        tbm: "shop",
+                        //location: "Dallas", (don't think this will be needed)
+                        hl: "en",
+                        gl: "us",
+                        api_key: "1ddcfec971878897acb77777350a952cedd2b48df96441783d389c7591584cb5"
+                    }, (result) => {
+                        const linksRef = ref(db,"scan/links");
 
                         // Save number of links in variable count
                         var count;
 
                         // Add every search result into the database
-                        data.searchResults.forEach(function (result, i) {
+                        result["shopping_results"].forEach(function (query, i) {
+
+                            if(query["title"] === undefined)
+                                return;
+                            if(query["product_link"] === undefined)
+                                return; 
+                            if(query["thumbnail"] === undefined)
+                                return;
                             // Update links/ with a new link child
                             const currentLink = "link" + i;
                             update(linksRef, {
@@ -451,9 +465,9 @@ app.get("/capture", function (req, res) {
                                 "scan/links/" + currentLink
                             );
                             set(curLinkRef, {
-                                linkTitle: result.title,
-                                linkUrl: result.productUrl,
-                                linkImg: result.imageUrl,
+                                linkTitle: query["title"],
+                                linkUrl: query["product_link"],
+                                linkImg: query["thumbnail"]
                             });
                             count = i;
                         });
@@ -473,7 +487,7 @@ app.get("/capture", function (req, res) {
                                 stage: 0,
                             });
                         }, 10000);
-                    });
+                    })
                 },
                 {
                     // Makes the onValue function only run once

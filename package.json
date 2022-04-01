@@ -15,6 +15,7 @@
     "electron-is-dev": "^2.0.0",
     "express": "^4.17.1",
     "firebase": "^9.0.1",
+    "google-search-results-nodejs": "^2.1.0",
     "googleapis": "^39.2.0",
     "image-to-base64": "^2.2.0",
     "jquery": "^3.6.0",
