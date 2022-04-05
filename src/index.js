@@ -17,7 +17,6 @@ var clientServerOptions = {
 	uri: 'http://localhost:3001/',
 };
 request(clientServerOptions, function (error, response) {
-	console.log(error, response.body);
 	return;
 });
 
@@ -249,7 +248,6 @@ onValue(captureRef, (snapshot) => {
 			uri: 'http://localhost:3001/capture',
 		};
 		request(clientServerOptions, function (error, response) {
-			console.log(error, response.body);
 			return;
 		});
 		// Set capture back to false after calling server function
