@@ -22,9 +22,9 @@ function createWindow() {
 			: `file://${path.join(__dirname, 'index.html')}`
 	);
 	// Open the DevTools.
-	if (isDev) {
-		win.webContents.openDevTools({ mode: 'detach' });
-	}
+	// if (isDev) {
+	// 	win.webContents.openDevTools({ mode: 'detach' });
+	// }
 }
 
 app.whenReady().then(createWindow);
