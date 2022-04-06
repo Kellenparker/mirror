@@ -481,12 +481,6 @@ app.get("/capture", function (req, res) {
                         update(ref(db, "scan"), {
                             stage: 4,
                         });
-
-                        setTimeout(function () {
-                            update(ref(db, "scan"), {
-                                stage: 0,
-                            });
-                        }, 10000);
                     })
                 },
                 {
