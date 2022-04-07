@@ -8,7 +8,7 @@ import Motivation from './modules/Motivation/Motivation.js'
 import News from './modules/News/News.js';
 import Traffic from './modules/Traffic/Traffic.js';
 import { app } from './firebase.js';
-import { getDatabase, ref, onValue, set } from "firebase/database";
+import { getDatabase, ref, onValue, set, update } from "firebase/database";
 var request = require('request');
 
 
@@ -35,6 +35,10 @@ function canLocate(type, location) {
 }
 
 const db = getDatabase();
+update(ref(db, "scan"), {
+	stage: 0,
+});
+
 const scanStageRef = ref(db, "scan/stage");
 const imgRef = ref(db, "scan/img");
 var scanStage;
