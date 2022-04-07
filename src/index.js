@@ -228,6 +228,7 @@ onValue(traRef, (snapshot) => {
 			if(locations[6] > 0) ReactDOM.render(<div/>, document.getElementById(locations[6]));
 			locations[6] = traLocation;
 		}
+		ReactDOM.render(<Traffic disabled={traDisabled} />, document.getElementById(traLocation));
 	}
 	else {
 		console.log("Cannot move module there");
