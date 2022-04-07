@@ -84,7 +84,7 @@ app.get("/remove", function (req, res) {
 app.get("/capture", function (req, res) {
 
     update(ref(db, "scan"), {
-        img: "",
+        img: false,
     });
 
     // Configure Firebase API
