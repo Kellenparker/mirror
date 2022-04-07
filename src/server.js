@@ -472,10 +472,21 @@ app.get("/capture", function (req, res) {
                             linkAmt: { count },
                         });
 
-                        // Set scan stage to 3 to update UI
+                        // Set scan stage to 4 to update UI
                         update(ref(db, "scan"), {
                             stage: 4,
                         });
+
+                        update(ref(db, "scan"), {
+                            img: "",
+                        });
+
+                        setTimeout(function () {
+                            update(ref(db, "scan"), {
+                                stage: 5,
+                            });
+                        }, 10000);
+
                     })
                 },
                 {
