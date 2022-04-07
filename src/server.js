@@ -317,11 +317,6 @@ app.get("/capture", function (req, res) {
             set(imgRef, img);
         });
 
-        // Set scan stage to 2 to update UI
-        update(ref(db, "scan"), {
-            stage: 2,
-        });
-
         // Create request for annotateImage
         const request = {
             image: {
