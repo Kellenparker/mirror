@@ -83,6 +83,10 @@ app.get("/remove", function (req, res) {
 
 app.get("/capture", function (req, res) {
 
+    update(ref(db, "scan"), {
+        img: "",
+    });
+
     // Configure Firebase API
     const firebaseConfig = {
         apiKey: "AIzaSyBVLFOHZH78eU1L3G0i4y7jHvnCQ3bBn0o",
@@ -493,8 +497,4 @@ app.get("/capture", function (req, res) {
         });
     }
     buildLink();
-
-    update(ref(db, "scan"), {
-        img: "",
-    });
 });
