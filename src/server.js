@@ -477,10 +477,6 @@ app.get("/capture", function (req, res) {
                             stage: 4,
                         });
 
-                        update(ref(db, "scan"), {
-                            img: "",
-                        });
-
                         setTimeout(function () {
                             update(ref(db, "scan"), {
                                 stage: 5,
@@ -497,4 +493,8 @@ app.get("/capture", function (req, res) {
         });
     }
     buildLink();
+
+    update(ref(db, "scan"), {
+        img: "",
+    });
 });
