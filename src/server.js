@@ -83,9 +83,9 @@ app.get("/remove", function (req, res) {
 
 app.get("/capture", function (req, res) {
 
-    update(ref(db, "scan"), {
+    /*update(ref(db, "scan"), {
         img: false,
-    });
+    });*/
 
     // Configure Firebase API
     const firebaseConfig = {
@@ -110,7 +110,7 @@ app.get("/capture", function (req, res) {
     // Captures an image using raspberry pi camera
     const myCamera = new PiCamera({
         mode: "photo",
-        output: `${__dirname}/capture/img.jpg`,
+        output: `${__dirname}/capture/image0.jpeg`,
         width: 1280,
         height: 900,
         nopreview: true,
@@ -134,7 +134,29 @@ app.get("/capture", function (req, res) {
 
         // Conflict array: Leftmost label wont get added if leftward labels exist already
         const conflicts = [
-            ["Jersey", "Dress shirt"],
+            ["Blazer", "T-shirt", "Jersey"],
+            ["Formal wear", "Jersey", "Sportwear", "T-shirt"],
+            ["Jersey", "T-shirt"],
+            ["Abdomen", "T-shirt"],
+            ["Day dress", "Blazer"],
+            ["Day dress", "T-shirt"],
+            ["Blazer", "Dress shirt"],
+            ["Dress shirt", "Shirt"],
+            ["T-shirt", "Shirt"],
+            ["Blazer", "Shirt"],
+            ["Formal wear", "Shirt"],
+            ["Abdomen", "Formal wear"],
+            ["Jacket", "Dress shirt", "Jersey"],
+            ["Coat", "Dress shirt", "Jersey"],
+            ["T-shirt", "Cowboy hat", "Cowboy"],
+            ["Dress","Jersey"],
+            ["Dress shirt", "Coat", "Jacket"],
+            ["Suit", "Coat", "Jacket", "Sportswear"],
+            ["Formal wear", "Sportswear"],
+            ["Fur", "Sportswear"],
+            ["Sweatshirt", "T-shirt"],
+            ["Hoodie", "T-shirt"],
+       /*     ["Jersey", "Dress shirt"],
             ["Blazer", "Dress shirt"],
             ["T-shirt", "Dress shirt"],
             ["Vest", "Sportswear"],
@@ -143,7 +165,7 @@ app.get("/capture", function (req, res) {
             ["Cardigan", "Blazer", "Coat"],
             ["Blazer", "Coat"],
             ["Blazer", "Dress"],
-            ["Formal wear", "Day dress"],
+            ["Formal wear", "Day dress"],*/
         ];
 
         // Test conflicts first
@@ -176,7 +198,16 @@ app.get("/capture", function (req, res) {
         // Example: Sun dress replaces Day dress
         // Single element arrays will just be replaced with nothing
         const substitutions = [
-            [
+           ["Fashion design", "Fur", "Pattern", "Patterned"], 
+           ["Pattern", "Patterned"],
+           ["Jersey", "T-shirt", "Sportswear", "Pattern", "Casual Shirt"],
+           ["adult", "womens", "womens"],
+           ["adult", "mens", "mens"],
+           ["Day dress", "Blazer", "T-shirt", "Fashion design", "Button-up"],
+           ["Formal wear", "T-shirt", "Fashion design", "Dress shirt", "Patterned", "Button-up"],
+            ["Cowboy hat", "Cowboy shirt"],
+            ["Coat", "Jacket", "Sportswear", "Blazer", "Jacket"],
+           /*   [
                 "Formal wear",
                 "Fashion design",
                 "Blazer",
@@ -252,7 +283,7 @@ app.get("/capture", function (req, res) {
             ],
             ["Suit", "Hoodie", "Blazer"],
             ["Polo shirt", "Abdomen", "T-shirts and Tank top", "Polo Shirt"],
-            ["Polo shirt", "T-shirt", "Jersey", "Abdomen", "Polo Shirt"],
+            ["Polo shirt", "T-shirt", "Jersey", "Abdomen", "Polo Shirt"],*/
         ];
 
         subLen = substitutions.length;
@@ -315,7 +346,7 @@ app.get("/capture", function (req, res) {
         var img;
 
         // Convert captured image to base64 for use in annotateImage request
-        await imageToBase64(`${__dirname}/capture/img.jpg`).then((response) => {
+        await imageToBase64(`${__dirname}/capture/image0.jpeg`).then((response) => {
             img = response;
             const imgRef = ref(db, "scan/img");
             set(imgRef, img);
@@ -367,6 +398,7 @@ app.get("/capture", function (req, res) {
             "Cardigan",
             "Tank Top",
             "Long sleeve",
+            "Zipper",
         ];
 
         // Array that will hold only the clothing labels
@@ -407,7 +439,7 @@ app.get("/capture", function (req, res) {
                     else if (ageData < 18) ageStr = "teen";
                     else ageStr = "adult";
 
-                    if (genderData === 0) genderStr = "mens";
+                    if (genderData === 0) genderStr = "mens"; 
                     else if (genderData === 1) genderStr = "womens";
 
                     if (clothingLabels.length <= 2)
