@@ -468,6 +468,11 @@ app.get("/", (req, res) => {
                                     update(ref(db, "scan"), {
                                         stage: 5,
                                     });
+                                    
+
+                                    update(ref(db, "scan"), {
+                                        img: false,
+                                    });
                                 }, 10000);
 
                             })
@@ -479,7 +484,16 @@ app.get("/", (req, res) => {
                     );
                 });
             }
-            buildLink();
+ 
+            const stageRef = ref(db, "scan/stage");
+            var stageData;
+            onValue(stageRef, (snapshot) => {
+                stageData = snapshot.val();
+
+                if(stageData === 4){
+                    buildLink();
+                }
+            });
         }
         set(cameraRef, {
 			capture: false
