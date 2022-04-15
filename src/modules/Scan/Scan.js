@@ -33,7 +33,7 @@ class Scan extends React.Component {
 					maxWidth: '300px',
 					top: '42%',
 					opacity: this.props.stage === 2 || this.props.stage === 3 ? '1' : '0'
-				}} alt="img"></img>
+				}} alt="" onerror="this.style.display='none'"></img>
 				<p style={{
 					position: "absolute",
 					margin: "auto",
