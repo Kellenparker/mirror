@@ -238,26 +238,3 @@ onValue(traRef, (snapshot) => {
 		console.log("Cannot move module there");
 	}
 })
-
-// Get capture value
-const captureRef = ref(db, "scan/camera/capture/");
-const cameraRef = ref(db, "scan/camera/");
-var captureData;
-onValue(captureRef, (snapshot) => {
-	captureData = snapshot.val();
-	console.log(captureData);
-
-	// If capture is true, initialize server side scan function
-	if (captureData) {
-		var clientServerOptions = {
-			uri: 'http://localhost:3001/capture',
-		};
-		request(clientServerOptions, function (error, response) {
-			return;
-		});
-		// Set capture back to false after calling server function
-		set(cameraRef, {
-			capture: false
-		});
-	}
-})
