@@ -58,23 +58,6 @@ app.get("/", (req, res) => {
                 img: false,
             });
 
-            // Captures an image using raspberry pi camera
-            const myCamera = new PiCamera({
-                mode: "photo",
-                output: `${__dirname}/capture/image0.jpeg`,
-                width: 1280,
-                height: 900,
-                nopreview: true,
-            });
-            myCamera
-                .snap()
-                .then((result) => {
-                    // Your picture was captured
-                })
-                .catch((error) => {
-                    console.log("error");
-                });
-
             // Function used to filter out labels
             function filterLabels(clothingAr, newLabel) {
                 //First check if label already exists
@@ -496,8 +479,24 @@ app.get("/", (req, res) => {
 
                 
             }
+
+            // Captures an image using raspberry pi camera
+            const myCamera = new PiCamera({
+                mode: "photo",
+                output: `${__dirname}/capture/image0.jpeg`,
+                width: 1280,
+                height: 900,
+                nopreview: true,
+            });
+            myCamera
+                .snap()
+                .then((result) => {
+                    buildLink();
+                })
+                .catch((error) => {
+                    console.log("error");
+                });
             
-            buildLink();
         }
         
         set(cameraRef, {
