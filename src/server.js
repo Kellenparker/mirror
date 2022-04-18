@@ -280,201 +280,201 @@ app.get("/", (req, res) => {
                 var img;
 
                 // Convert captured image to base64 for use in annotateImage request
-                await imageToBase64(`${__dirname}/capture/image0.jpeg`).then((response) => {
+                await imageToBase64(`${__dirname}/capture/img.jpg`).then((response) => {
                     img = response;
                     const imgRef = ref(db, "scan/img");
                     set(imgRef, img);
-                });
 
-                const stageRef = ref(db, "scan/stage");
-                var stageData;
-                onValue(stageRef, (snapshot) => {
-                    stageData = snapshot.val();
+                    const stageRef = ref(db, "scan/stage");
+                    var stageData;
+                    onValue(stageRef, (snapshot) => {
+                        stageData = snapshot.val();
 
-                    if(stageData === 4){
+                        if(stageData === 3){
 
-                        // Create request for annotateImage
-                        const request = {
-                            image: {
-                                content: img,
-                            },
-                            features: [
-                                {
-                                    // Can change amount of labels returned by changing maxResults
-                                    maxResults: 50,
-                                    type: "LABEL_DETECTION",
+                            // Create request for annotateImage
+                            const request = {
+                                image: {
+                                    content: img,
                                 },
-                            ],
-                        };
+                                features: [
+                                    {
+                                        // Can change amount of labels returned by changing maxResults
+                                        maxResults: 50,
+                                        type: "LABEL_DETECTION",
+                                    },
+                                ],
+                            };
 
-                        // All appropriate clothing labels
-                        const apprLabels = [
-                            "Apron",
-                            "Bodybuilding",
-                            "Coat",
-                            "Dress",
-                            "Hoodie",
-                            "Jacket",
-                            "Jersey",
-                            "Shirt",
-                            "Blouse",
-                            "Sportswear",
-                            "Sweater",
-                            "Sweatshirt",
-                            "Vest",
-                            "T-shirt",
-                            "Suit",
-                            "Blazer",
-                            "Dress shirt",
-                            "Formal wear",
-                            "Polo shirt",
-                            "Day dress",
-                            "Style",
-                            "Fashion design",
-                            "Pattern",
-                            "Fur clothing",
-                            "Abdomen",
-                            "Fur",
-                            "Cowboy hat",
-                            "Cardigan",
-                            "Tank Top",
-                            "Long sleeve",
-                            "Zipper",
-                        ];
+                            // All appropriate clothing labels
+                            const apprLabels = [
+                                "Apron",
+                                "Bodybuilding",
+                                "Coat",
+                                "Dress",
+                                "Hoodie",
+                                "Jacket",
+                                "Jersey",
+                                "Shirt",
+                                "Blouse",
+                                "Sportswear",
+                                "Sweater",
+                                "Sweatshirt",
+                                "Vest",
+                                "T-shirt",
+                                "Suit",
+                                "Blazer",
+                                "Dress shirt",
+                                "Formal wear",
+                                "Polo shirt",
+                                "Day dress",
+                                "Style",
+                                "Fashion design",
+                                "Pattern",
+                                "Fur clothing",
+                                "Abdomen",
+                                "Fur",
+                                "Cowboy hat",
+                                "Cardigan",
+                                "Tank Top",
+                                "Long sleeve",
+                                "Zipper",
+                            ];
 
-                        // Array that will hold only the clothing labels
-                        var clothingLabels = [];
+                            // Array that will hold only the clothing labels
+                            var clothingLabels = [];
 
-                        // Get labels using Google Cloud Vision
-                        let res = client.annotateImage(request).then((result) => {
-                            let labels = result[0].labelAnnotations;
-                            console.log("Labels:");
-                            labels.forEach((label) =>
-                                label.score > 0.5 ? console.log(label.description) : 0
-                            );
+                            // Get labels using Google Cloud Vision
+                            let res = client.annotateImage(request).then((result) => {
+                                let labels = result[0].labelAnnotations;
+                                console.log("Labels:");
+                                labels.forEach((label) =>
+                                    label.score > 0.5 ? console.log(label.description) : 0
+                                );
 
-                            // Sort through all returned labels to find appropriate labels, determined by apprLabels
-                            labels.forEach(function (label) {
-                                const len = apprLabels.length;
-                                for (let i = 0; i < len; i++) {
-                                    if (label.description === apprLabels[i]) {
-                                        // Update clothingLabels array with filtered labels
-                                        filterLabels(clothingLabels, label.description);
+                                // Sort through all returned labels to find appropriate labels, determined by apprLabels
+                                labels.forEach(function (label) {
+                                    const len = apprLabels.length;
+                                    for (let i = 0; i < len; i++) {
+                                        if (label.description === apprLabels[i]) {
+                                            // Update clothingLabels array with filtered labels
+                                            filterLabels(clothingLabels, label.description);
+                                        }
                                     }
-                                }
+                                });
+
+                                // Obtain age and gender data
+                                const userRef = ref(db, "user");
+                                var ageData, genderData;
+                                var ageStr = (genderStr = "");
+
+                                // Get values of age and gender, will only run once
+                                onValue(
+                                    userRef,
+                                    (snapshot) => {
+                                        ageData = snapshot.child("age").val();
+                                        genderData = snapshot.child("gender").val();
+
+                                        if (ageData < 12) ageStr = "child";
+                                        else if (ageData < 18) ageStr = "teen";
+                                        else ageStr = "adult";
+
+                                        if (genderData === 0) genderStr = "mens"; 
+                                        else if (genderData === 1) genderStr = "womens";
+
+                                        if (clothingLabels.length <= 2)
+                                            filterLabels(clothingLabels, "Clothing");
+
+                                        // Filter age and gender strings
+                                        filterLabels(clothingLabels, ageStr);
+                                        filterLabels(clothingLabels, genderStr);
+
+                                        console.log(clothingLabels);
+                                        // Run labels through substituteLabels function
+                                        clothingLabels = substituteLabels(clothingLabels);
+                                        console.log(clothingLabels);
+
+                                        // Build search string
+                                        let searchStr = "";
+                                        let len = clothingLabels.length;
+                                        for (let i = 0; i < len; i++)
+                                            searchStr += clothingLabels[i] + " ";
+
+                                        console.log(searchStr);
+
+                                        search.json({
+                                            q: searchStr,
+                                            tbm: "shop",
+                                            //location: "Dallas", (don't think this will be needed)
+                                            hl: "en",
+                                            gl: "us",
+                                            api_key: "1ddcfec971878897acb77777350a952cedd2b48df96441783d389c7591584cb5"
+                                        }, (result) => {
+                                            const linksRef = ref(db,"scan/links");
+
+                                            // Save number of links in variable count
+                                            var count;
+
+                                            // Add every search result into the database
+                                            result["shopping_results"].forEach(function (query, i) {
+
+                                                if(query["title"] === undefined)
+                                                    return;
+                                                if(query["product_link"] === undefined)
+                                                    return; 
+                                                if(query["thumbnail"] === undefined)
+                                                    return;
+                                                // Update links/ with a new link child
+                                                const currentLink = "link" + i;
+                                                update(linksRef, {
+                                                    [currentLink]: true,
+                                                });
+
+                                                // Set link child with link values
+                                                const curLinkRef = ref(
+                                                    db,
+                                                    "scan/links/" + currentLink
+                                                );
+                                                set(curLinkRef, {
+                                                    linkTitle: query["title"],
+                                                    linkUrl: query["product_link"],
+                                                    linkImg: query["thumbnail"]
+                                                });
+                                                count = i;
+                                            });
+
+                                            // Update link count in database
+                                            update(linksRef, {
+                                                linkAmt: { count },
+                                            });
+
+                                            // Set scan stage to 4 to update UI
+                                            update(ref(db, "scan"), {
+                                                stage: 4,
+                                            });
+
+                                            setTimeout(function () {
+                                                update(ref(db, "scan"), {
+                                                    stage: 5,
+                                                });
+                                                
+
+                                                update(ref(db, "scan"), {
+                                                    img: false,
+                                                });
+                                            }, 10000);
+
+                                        })
+                                    },
+                                    {
+                                        // Makes the onValue function only run once
+                                        onlyOnce: true,
+                                    }
+                                );
                             });
 
-                            // Obtain age and gender data
-                            const userRef = ref(db, "user");
-                            var ageData, genderData;
-                            var ageStr = (genderStr = "");
-
-                            // Get values of age and gender, will only run once
-                            onValue(
-                                userRef,
-                                (snapshot) => {
-                                    ageData = snapshot.child("age").val();
-                                    genderData = snapshot.child("gender").val();
-
-                                    if (ageData < 12) ageStr = "child";
-                                    else if (ageData < 18) ageStr = "teen";
-                                    else ageStr = "adult";
-
-                                    if (genderData === 0) genderStr = "mens"; 
-                                    else if (genderData === 1) genderStr = "womens";
-
-                                    if (clothingLabels.length <= 2)
-                                        filterLabels(clothingLabels, "Clothing");
-
-                                    // Filter age and gender strings
-                                    filterLabels(clothingLabels, ageStr);
-                                    filterLabels(clothingLabels, genderStr);
-
-                                    console.log(clothingLabels);
-                                    // Run labels through substituteLabels function
-                                    clothingLabels = substituteLabels(clothingLabels);
-                                    console.log(clothingLabels);
-
-                                    // Build search string
-                                    let searchStr = "";
-                                    let len = clothingLabels.length;
-                                    for (let i = 0; i < len; i++)
-                                        searchStr += clothingLabels[i] + " ";
-
-                                    console.log(searchStr);
-
-                                    search.json({
-                                        q: searchStr,
-                                        tbm: "shop",
-                                        //location: "Dallas", (don't think this will be needed)
-                                        hl: "en",
-                                        gl: "us",
-                                        api_key: "1ddcfec971878897acb77777350a952cedd2b48df96441783d389c7591584cb5"
-                                    }, (result) => {
-                                        const linksRef = ref(db,"scan/links");
-
-                                        // Save number of links in variable count
-                                        var count;
-
-                                        // Add every search result into the database
-                                        result["shopping_results"].forEach(function (query, i) {
-
-                                            if(query["title"] === undefined)
-                                                return;
-                                            if(query["product_link"] === undefined)
-                                                return; 
-                                            if(query["thumbnail"] === undefined)
-                                                return;
-                                            // Update links/ with a new link child
-                                            const currentLink = "link" + i;
-                                            update(linksRef, {
-                                                [currentLink]: true,
-                                            });
-
-                                            // Set link child with link values
-                                            const curLinkRef = ref(
-                                                db,
-                                                "scan/links/" + currentLink
-                                            );
-                                            set(curLinkRef, {
-                                                linkTitle: query["title"],
-                                                linkUrl: query["product_link"],
-                                                linkImg: query["thumbnail"]
-                                            });
-                                            count = i;
-                                        });
-
-                                        // Update link count in database
-                                        update(linksRef, {
-                                            linkAmt: { count },
-                                        });
-
-                                        // Set scan stage to 4 to update UI
-                                        update(ref(db, "scan"), {
-                                            stage: 4,
-                                        });
-
-                                        setTimeout(function () {
-                                            update(ref(db, "scan"), {
-                                                stage: 5,
-                                            });
-                                            
-
-                                            update(ref(db, "scan"), {
-                                                img: false,
-                                            });
-                                        }, 10000);
-
-                                    })
-                                },
-                                {
-                                    // Makes the onValue function only run once
-                                    onlyOnce: true,
-                                }
-                            );
-                        });
-
-                    }
+                        }
+                    });
                 });
 
                 
@@ -496,7 +496,7 @@ app.get("/", (req, res) => {
                 .catch((error) => {
                     console.log("error");
                 });
-            
+            buildLink()
         }
         
         set(cameraRef, {
