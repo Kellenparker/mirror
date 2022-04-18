@@ -280,7 +280,7 @@ app.get("/", (req, res) => {
                 var img;
 
                 // Convert captured image to base64 for use in annotateImage request
-                await imageToBase64(`${__dirname}/capture/img.jpg`).then((response) => {
+                await imageToBase64(`${__dirname}/capture/image0.jpeg`).then((response) => {
                     img = response;
                     const imgRef = ref(db, "scan/img");
                     set(imgRef, img);
@@ -496,7 +496,6 @@ app.get("/", (req, res) => {
                 .catch((error) => {
                     console.log("error");
                 });
-            buildLink()
         }
         
         set(cameraRef, {
