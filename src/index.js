@@ -212,10 +212,12 @@ onValue(newsRef, (snapshot) => {
 })
 
 const traRef = ref(db, "modules/traffic");
-var traDisabled, traLocation;
+var traDisabled, traLocation, traHour, traMin;
 onValue(traRef, (snapshot) => {
 	traDisabled = snapshot.child('disabled').val();
 	traLocation = snapshot.child('location').val();
+	traHour = snapshot.child('hour').val();
+	traMin = snapshot.child('min').val();
 	if(locations[6] === null) {locations[6] = traLocation;}
 	if(traLocation === -1 && locations[6] > 0){
 		ReactDOM.render(<div/>, document.getElementById(locations[6]));
@@ -225,14 +227,14 @@ onValue(traRef, (snapshot) => {
 	if(canLocate(6, traLocation)){
 		if(locations[6] > 0){
 			locations[6] = traLocation;
-			ReactDOM.render(<Traffic disabled={traDisabled} />, document.getElementById(traLocation));
+			ReactDOM.render(<Traffic disabled={traDisabled} hour={traHour} minute={traMin}/>, document.getElementById(traLocation));
 		}
 		else if(locations[6] != traLocation){
-			ReactDOM.render(<Traffic disabled={traDisabled} />, document.getElementById(traLocation));
+			ReactDOM.render(<Traffic disabled={traDisabled} hour={traHour} minute={traMin}/>, document.getElementById(traLocation));
 			if(locations[6] > 0) ReactDOM.render(<div/>, document.getElementById(locations[6]));
 			locations[6] = traLocation;
 		}
-		ReactDOM.render(<Traffic disabled={traDisabled} />, document.getElementById(traLocation));
+		ReactDOM.render(<Traffic disabled={traDisabled} hour={traHour} minute={traMin}/>, document.getElementById(traLocation));
 	}
 	else {
 		console.log("Cannot move module there");
