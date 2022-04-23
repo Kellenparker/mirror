@@ -408,7 +408,7 @@ app.get("/", (req, res) => {
                                             //location: "Dallas", (don't think this will be needed)
                                             hl: "en",
                                             gl: "us",
-                                            api_key: "1ddcfec971878897acb77777350a952cedd2b48df96441783d389c7591584cb5"
+                                            api_key: "883e000a146472beb0faad3b3578b5aecddd701d1e0ccd794c5350351c47e085"
                                         }, (result) => {
                                             const linksRef = ref(db,"scan/links");
 
