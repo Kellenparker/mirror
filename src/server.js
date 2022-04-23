@@ -8,7 +8,7 @@ const imageToBase64 = require("image-to-base64");
 } = require("unofficial-amazon-search");
 */
 const SerpApi = require('google-search-results-nodejs');
-const search = new SerpApi.GoogleSearch("1ddcfec971878897acb77777350a952cedd2b48df96441783d389c7591584cb5");
+const search = new SerpApi.GoogleSearch("883e000a146472beb0faad3b3578b5aecddd701d1e0ccd794c5350351c47e085");
 const { initializeApp } = require('firebase/app');
 const app = express();
 const cors = require("cors");
