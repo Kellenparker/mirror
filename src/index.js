@@ -8,7 +8,7 @@ import Motivation from './modules/Motivation/Motivation.js'
 import News from './modules/News/News.js';
 import Traffic from './modules/Traffic/Traffic.js';
 import { app } from './firebase.js';
-import { getDatabase, ref, onValue, set, update } from "firebase/database";
+import { getDatabase, ref, onValue, update } from "firebase/database";
 var request = require('request');
 
 
@@ -74,7 +74,7 @@ onValue(weatherRef, (snapshot) => {
 			locations[1] = weatherLocation;
 			ReactDOM.render(<Weather disabled={weatherDisabled} />, document.getElementById(weatherLocation));
 		}
-		else if(locations[1] != timeLocation){
+		else if(locations[1] !== timeLocation){
 			ReactDOM.render(<Weather disabled={weatherDisabled} />, document.getElementById(weatherLocation));
 			if(locations[1] > 0) ReactDOM.render(<div/>, document.getElementById(locations[1]));
 			locations[1] = weatherLocation;
@@ -102,7 +102,7 @@ onValue(calendarRef, (snapshot) => {
 			locations[2] = calendarLocation;
 			ReactDOM.render(<Calendar disabled={calendarDisabled} />, document.getElementById(calendarLocation));
 		}
-		else if(locations[2] != calendarLocation){
+		else if(locations[2] !== calendarLocation){
 			ReactDOM.render(<Calendar disabled={calendarDisabled} />, document.getElementById(calendarLocation));
 			if(locations[2] > 0) ReactDOM.render(<div/>, document.getElementById(locations[2]));
 			locations[2] = calendarLocation;
@@ -130,7 +130,7 @@ onValue(motRef, (snapshot) => {
 			locations[3] = motLocation;
 			ReactDOM.render(<Motivation disabled={motDisabled} />, document.getElementById(motLocation));
 		}
-		else if(locations[3] != motLocation){
+		else if(locations[3] !== motLocation){
 			ReactDOM.render(<Motivation disabled={motDisabled} />, document.getElementById(motLocation));
 			if(locations[3] > 0) ReactDOM.render(<div/>, document.getElementById(locations[3]));
 			locations[3] = motLocation;
@@ -154,7 +154,7 @@ onValue(notesRef, (snapshot) => {
 		locations[4] = -1;
 		return;
 	}
-    if (notesDisabled == false){
+    if (notesDisabled === false){
         notes = (
             <div style={{height: "100%", overflow: "hidden"}}>
 				<p style={{
@@ -172,7 +172,7 @@ onValue(notesRef, (snapshot) => {
 			locations[4] = notesLocation;
 			ReactDOM.render(notes, document.getElementById(notesLocation));
 		}
-		else if(locations[4] != notesLocation){
+		else if(locations[4] !== notesLocation){
 			ReactDOM.render(notes, document.getElementById(notesLocation));
 			if(locations[4] > 0) ReactDOM.render(<div/>, document.getElementById(locations[4]));
 			locations[4] = notesLocation;
@@ -199,7 +199,7 @@ onValue(newsRef, (snapshot) => {
 			locations[5] = newsLocation;
 			ReactDOM.render(<News disabled={newsDisabled} />, document.getElementById(newsLocation));
 		}
-		else if(locations[5] != newsLocation){
+		else if(locations[5] !== newsLocation){
 			ReactDOM.render(<News disabled={newsDisabled} />, document.getElementById(newsLocation));
 			if(locations[5] > 0) ReactDOM.render(<div/>, document.getElementById(locations[5]));
 			locations[5] = newsLocation;
@@ -229,7 +229,7 @@ onValue(traRef, (snapshot) => {
 			locations[6] = traLocation;
 			ReactDOM.render(<Traffic disabled={traDisabled} hour={traHour} minute={traMin}/>, document.getElementById(traLocation));
 		}
-		else if(locations[6] != traLocation){
+		else if(locations[6] !== traLocation){
 			ReactDOM.render(<Traffic disabled={traDisabled} hour={traHour} minute={traMin}/>, document.getElementById(traLocation));
 			if(locations[6] > 0) ReactDOM.render(<div/>, document.getElementById(locations[6]));
 			locations[6] = traLocation;

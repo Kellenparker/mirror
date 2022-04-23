@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDatabase, ref, onValue, set } from "firebase/database";
+import { getDatabase, ref, set } from "firebase/database";
 
 class Clock extends React.Component {
 	constructor(props) {

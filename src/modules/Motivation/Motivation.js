@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDatabase, ref, onValue, set } from "firebase/database";
+import { getDatabase, ref, set } from "firebase/database";
 
 const quotes = ['"Life is about making an impact, not making an income."', '-Kevin Kruse',
                 '"Whatever the mind of man can conceive and believe, it can achieve."', '-Napoleon Hill',

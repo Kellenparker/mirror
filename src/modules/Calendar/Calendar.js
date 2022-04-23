@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDatabase, ref, onValue, set } from "firebase/database";
+import { getDatabase, ref, set } from "firebase/database";
 
 class Calendar extends React.Component {
 	constructor(props) {
@@ -80,7 +80,7 @@ class Calendar extends React.Component {
         var arrayLength = Object.keys(data.items).length;
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        if (arrayLength == 0){
+        if (arrayLength === 0){
             this.setState({
                 label: {
                     events: "No Upcoming Events"
@@ -116,7 +116,7 @@ class Calendar extends React.Component {
                     summary: ""
                 }
             });
-        } else if (arrayLength == 1){
+        } else if (arrayLength === 1){
             this.setState({
                 event2: {
                     date: "",
@@ -142,7 +142,7 @@ class Calendar extends React.Component {
                     time: "",
                     summary: ""
                 }});
-        } else if (arrayLength == 2){
+        } else if (arrayLength === 2){
             this.setState({
                 event3: {
                     date: "",
@@ -162,7 +162,7 @@ class Calendar extends React.Component {
                     time: "",
                     summary: ""
                 }});
-        }else if (arrayLength == 3){
+        }else if (arrayLength === 3){
             this.setState({
                 event4: {
                     date: "",
@@ -176,7 +176,7 @@ class Calendar extends React.Component {
                     time: "",
                     summary: ""
                 }});
-        }else if (arrayLength == 4){
+        }else if (arrayLength === 4){
             this.setState({
                 event5: {
                     date: "",
@@ -249,6 +249,8 @@ class Calendar extends React.Component {
                             }
                         });
                         break;
+                    default:
+                        break;
                 }
             }
             if(data.items[counter].start.hasOwnProperty('date')){
@@ -312,6 +314,8 @@ class Calendar extends React.Component {
                                 summary: data.items[counter].summary
                             }
                         });
+                        break;
+                    default:
                         break;
                 }
             }

@@ -1,14 +1,9 @@
 import React from 'react';
 import outline from './assets/human.png';
-import { getDatabase, ref, onValue, set } from "firebase/database";
 import './spinner.css';
 
 class Scan extends React.Component {
-	constructor(props) {
-		super(props);
-	}
 	render() {
-        const db = getDatabase();
 		return (
 			<div style={{
 				color: "white",

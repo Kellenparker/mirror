@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDatabase, ref, onValue, set } from "firebase/database";
+import { getDatabase, ref, set } from "firebase/database";
 
 class News extends React.Component {
     constructor(props) {
@@ -48,7 +48,7 @@ class News extends React.Component {
 
         }
         this.counter=this.counter+1;
-        if(this.counter == 20) {
+        if(this.counter === 20) {
             this.counter = 0;
         }
     }

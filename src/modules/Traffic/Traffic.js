@@ -1,6 +1,5 @@
-import { timers } from "jquery";
 import React from "react";
-import { getDatabase, ref, onValue, set } from "firebase/database";
+import { getDatabase, ref, set } from "firebase/database";
 var request = require("request");
 
 class Traffic extends React.Component {
