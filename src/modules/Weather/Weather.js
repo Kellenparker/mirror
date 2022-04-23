@@ -93,6 +93,7 @@ class Weather extends React.Component {
 	getConditions(id){
 		let daytime = this.getDaytime();
 		let str = "";
+		console.log(id);
 		
 		if(id >= 200 && id < 300){
 			//Thunderstorm
@@ -102,9 +103,12 @@ class Weather extends React.Component {
 			//Drizzle
 			str += "showers"
 		}
-		else if(id >= 500 && id < 500){
+		else if(id >= 500 && id < 600){
 			//Rain
+			if(daytime) str += "day-";
+			else str += "night-";
 			str += "rain"
+			console.log(str);
 		}
 		else if(id >= 600 && id < 700){
 			//Snow
