@@ -163,8 +163,8 @@ while listening:
                 os.remove("temp.mp3")
                 ref2.update({"capture": True})
                 ref2.update({"capture": False})
-                time.sleep(5)
                 ref.update({"stage":2})
+                time.sleep(7)
                 text = "Would you like to retake your picture? Please say 'continue' to generate results or 'retake picture' to capture your image again."
                 tts = gTTS(text=text, lang="en")
                 tts.save("temp.mp3")

@@ -55,12 +55,13 @@ class Clock extends React.Component {
         const cRef = ref(db, "modules/time/text/");
 		var ampm = "AM"
 		var hour = this.state.hour
-		if(this.state.hour > 12) {
+		if(this.state.hour >= 12) {
 			hour = this.state.hour - 12;
 			ampm = "PM";
 		}
 		if (this.state.hour === 0)
 			hour = 12;
+		
 		var minute = this.state.minute
 		if(this.state.minute < 10)
 			minute = "0" + this.state.minute;
