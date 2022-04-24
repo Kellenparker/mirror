@@ -132,15 +132,17 @@ app.get("/", (req, res) => {
                 // Example: Sun dress replaces Day dress
                 // Single element arrays will just be replaced with nothing
                 const substitutions = [
-                ["Fashion design", "Fur", "Pattern", "Patterned"], 
-                ["Pattern", "Patterned"],
-                ["Jersey", "T-shirt", "Sportswear", "Pattern", "Casual Shirt"],
-                ["adult", "womens", "womens"],
-                ["adult", "mens", "mens"],
-                ["Day dress", "Blazer", "T-shirt", "Fashion design", "Button-up"],
-                ["Formal wear", "T-shirt", "Fashion design", "Dress shirt", "Patterned", "Button-up"],
+                    ["Fashion design", "Fur", "Pattern", "Patterned"], 
+                    ["Pattern", "Patterned"],
+                    ["Jersey", "T-shirt", "Sportswear", "Pattern", "Casual Shirt"],
+                    ["adult", "womens", "womens"],
+                    ["adult", "mens", "mens"],
+                    ["Day dress", "Blazer", "T-shirt", "Fashion design", "Button-up"],
+                    ["Formal wear", "T-shirt", "Fashion design", "Dress shirt", "Patterned", "Button-up"],
                     ["Cowboy hat", "Cowboy shirt"],
                     ["Coat", "Jacket", "Sportswear", "Blazer", "Jacket"],
+		    ["Fur", "Jackets"],
+			["Clothing", "Shirts"],
                 /*   [
                         "Formal wear",
                         "Fashion design",
