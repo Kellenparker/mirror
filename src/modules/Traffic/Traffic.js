@@ -65,16 +65,16 @@ class Traffic extends React.Component {
         const db = getDatabase();
         const trafRef = ref(db, "modules/traffic/text/");
         var ampm = "AM"
-        if(this.hour > 12) {
+        if(this.state.arriveHour >= 12) {
             this.hour -= 12;
             ampm = "PM";
         }
-        if(this.hour === 0)
-            this.hour = 12;
+        if(this.state.arriveHour === 0)
+            this.state.arriveHour = 12;
 
-        var minute = this.minute
-        if(this.minute < 10)
-            minute = "0" + this.minute;
+        var minute = this.state.arriveMin
+        if(this.state.arriveMin < 10)
+            minute = "0" + this.state.arriveMin;
 
         var ampm2 = "AM"
         if(this.state.hour > 12) {
@@ -89,8 +89,8 @@ class Traffic extends React.Component {
             minute2 = "0" + this.state.minute;
         
         set (trafRef, {
-                text: "In order to arrive at " + this.hour 
-            + " " + minute + ampm + " to your desired destination, you must leave by " 
+                text: "In order to arrive at " + this.state.arriveHour + " " + minute + ampm + " "
+            + " to your desired destination, you must leave by " 
             + this.state.hour + " " + minute2 + ampm2
         });
         return (

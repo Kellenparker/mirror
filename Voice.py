@@ -69,7 +69,7 @@ while listening:
                 text="Turning on Screen"
                 tts = gTTS(text=text, lang="en")
                 tts.save("temp.mp3")
-                time.sleep(5)
+                time.sleep(6)
                 while pg.mixer.music.get_busy():
                     time.sleep(1)
                 os.system("mpg321 temp.mp3")
@@ -90,6 +90,7 @@ while listening:
                 os.remove("temp.mp3")
             elif check4 != -1:
                 ref = db.reference("/modules/motivation/text/text/")
+                text = ref.get()
                 tts = gTTS(text=text, lang="en")
                 tts.save("temp.mp3")
                 os.system("mpg321 temp.mp3")
@@ -131,11 +132,19 @@ while listening:
                 ref5 = db.reference("/modules/notes/text/")
                 ref6 = db.reference("/modules/motivation/text/text/")
                 ref7 = db.reference("/user/name/")
-                text = "Good morning " + ref7.get() + ", " + ref.get() + ". " + ref1.get() + ". " + ref2.get() + ". Also on your calendar, " + ref3.get() +  ". Also, " + ref4.get() + " A reminder thatin your notes, you have, " + ref5.get() + ". And " + ref6.get() + " I hope you have a great day."
-                tts = gTTS(text=text, lang="en")
-                tts.save("temp.mp3")
-                os.system("mpg321 temp.mp3")
-                os.remove("temp.mp3")
+                name = ref7.get()
+                if(name == ""):
+                    text = "Please log in to app"
+                    tts = gTTS(text=text, lang="en")
+                    tts.save("temp.mp3")
+                    os.system("mpg321 temp.mp3")
+                    os.remove("temp.mp3")
+                else:
+                    text = "Good morning " + name + ", " + ref.get() + ". " + ref1.get() + ". " + ref2.get() + ". Also on your calendar, " + ref3.get() +  ". Also, " + ref4.get() + ".  Also in your notes, you have, " + ref5.get() + ". And " + ref6.get() + ".  I hope you have a great day."
+                    tts = gTTS(text=text, lang="en")
+                    tts.save("temp.mp3")
+                    os.system("mpg321 temp.mp3")
+                    os.remove("temp.mp3")
             elif check10 != -1 or check13 != -1:
                 ref = db.reference("/scan/")
                 ref.update({"stage": 1})
@@ -145,16 +154,17 @@ while listening:
                 os.system("mpg321 temp.mp3")
                 os.remove("temp.mp3")
             elif check11 != -1:
+                ref = db.reference("/scan/")
                 ref2 = db.reference("/scan/camera/")
-                ref2.update({"capture": True})
                 text = "Please stay still while capturing your image."
                 tts = gTTS(text=text, lang="en")
                 tts.save("temp.mp3")
                 os.system("mpg321 temp.mp3")
                 os.remove("temp.mp3")
-                ref = db.reference("/scan/")
-                time.sleep(5)
+                ref2.update({"capture": True})
+                ref2.update({"capture": False})
                 ref.update({"stage":2})
+                time.sleep(7)
                 text = "Would you like to retake your picture? Please say 'continue' to generate results or 'retake picture' to capture your image again."
                 tts = gTTS(text=text, lang="en")
                 tts.save("temp.mp3")
@@ -162,13 +172,14 @@ while listening:
                 os.remove("temp.mp3")
             elif check12 != -1:
                 ref = db.reference("/scan/")
-                num = ref.child("stage").get();
+                ref.update({"stage":3})
                 text = "Please wait as results are generating. This might take a while"
                 tts = gTTS(text=text, lang="en")
                 tts.save("temp.mp3")
                 os.system("mpg321 temp.mp3")
                 os.remove("temp.mp3")
-                res = 3
+                num = ref.child("stage").get();
+                res = 4
                 while num != res:
                     time.sleep(1)
                     num = ref.child("stage").get();
@@ -183,6 +194,5 @@ while listening:
                 tts.save("temp.mp3")
                 os.system("mpg321 temp.mp3")
                 os.remove("temp.mp3")
-                ref.update({"stage":0})
         except sr.UnknownValueError:
             print("Didn't recognize that.")
