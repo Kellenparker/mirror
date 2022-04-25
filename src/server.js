@@ -8,7 +8,7 @@ const imageToBase64 = require("image-to-base64");
 } = require("unofficial-amazon-search");
 */
 const SerpApi = require('google-search-results-nodejs');
-const search = new SerpApi.GoogleSearch("1ddcfec971878897acb77777350a952cedd2b48df96441783d389c7591584cb5");
+const search = new SerpApi.GoogleSearch("883e000a146472beb0faad3b3578b5aecddd701d1e0ccd794c5350351c47e085");
 const { initializeApp } = require('firebase/app');
 const app = express();
 const cors = require("cors");
@@ -90,16 +90,6 @@ app.get("/", (req, res) => {
                     ["Fur", "Sportswear"],
                     ["Sweatshirt", "T-shirt"],
                     ["Hoodie", "T-shirt"],
-            /*     ["Jersey", "Dress shirt"],
-                    ["Blazer", "Dress shirt"],
-                    ["T-shirt", "Dress shirt"],
-                    ["Vest", "Sportswear"],
-                    ["Fur", "Jacket"],
-                    ["T-shirt", "Coat", "Blazer"],
-                    ["Cardigan", "Blazer", "Coat"],
-                    ["Blazer", "Coat"],
-                    ["Blazer", "Dress"],
-                    ["Formal wear", "Day dress"],*/
                 ];
 
                 // Test conflicts first
@@ -132,92 +122,19 @@ app.get("/", (req, res) => {
                 // Example: Sun dress replaces Day dress
                 // Single element arrays will just be replaced with nothing
                 const substitutions = [
-                ["Fashion design", "Fur", "Pattern", "Patterned"], 
-                ["Pattern", "Patterned"],
-                ["Jersey", "T-shirt", "Sportswear", "Pattern", "Casual Shirt"],
-                ["adult", "womens", "womens"],
-                ["adult", "mens", "mens"],
-                ["Day dress", "Blazer", "T-shirt", "Fashion design", "Button-up"],
-                ["Formal wear", "T-shirt", "Fashion design", "Dress shirt", "Patterned", "Button-up"],
+                    ["Fashion design", "Fur", "Pattern", "Patterned"], 
+                    ["Pattern", "Patterned"],
+                    ["Jersey", "T-shirt", "Sportswear", "Pattern", "Casual Shirt"],
+                    ["adult", "womens", "womens"],
+                    ["adult", "mens", "mens"],
+                    ["Day dress", "Blazer", "T-shirt", "Fashion design", "Button-up"],
+                    ["Formal wear", "T-shirt", "Fashion design", "Dress shirt", "Patterned", "Button-up"],
                     ["Cowboy hat", "Cowboy shirt"],
                     ["Coat", "Jacket", "Sportswear", "Blazer", "Jacket"],
-                /*   [
-                        "Formal wear",
-                        "Fashion design",
-                        "Blazer",
-                        "Jersey",
-                        "Sportswear",
-                        "Sportswear",
-                    ],
-                    ["T-shirt", "Clothing", "Dress Shirt"],
-                    ["T-shirt", "Clothing", "Abdomen", "Dress Shirt"],
-                    ["T-shirt", "Abdomen", "Dress Shirt"],
-                    ["Clothing", "Dress shirt"],
-                    ["adult"],
-                    ["Jacket", "Jacket Hoodie Sweatshirts"],
-                    [
-                        "Dress shirt",
-                        "Sportswear",
-                        "Formal wear",
-                        "Hoodie",
-                        "Jacket Hoodie Sweatshirts",
-                        "Jacket Hoodie Sweatshirts",
-                    ],
-                    ["Fur", "Fuzzy"],
-                    ["Fuzzy", "Pattern", "Fuzzy shirts Sweatshirt Hoodie"],
-                    ["Fashion design"],
-                    ["Dress shirt", "Formal wear", "Pattern", "Button up Shirt"],
-                    ["Abdomen", "Formal wear", "Pattern", "Crop top Blouses"],
-                    ["Jersey", "Vest", "T-shirt", "Tank top"],
-                    [
-                        "Abdomen",
-                        "Pattern",
-                        "Jersey",
-                        "Sportswear",
-                        "T-shirt",
-                        "T-shirts and Tank top",
-                    ],
-                    [
-                        "Abdomen",
-                        "Pattern",
-                        "T-shirt",
-                        "Sportswear",
-                        "T-shirt and Tank top",
-                    ],
-                    ["Sweatshirt", "T-shirt", "Pattern", "Sportswear", "Long sleeve"],
-                    ["Sportswear", "Fuzzy shirts Sweatshirt Hoodie", "Cardigans"],
-                    [
-                        "Fuzzy Shirt Sweatshirt Hoodie",
-                        "T-shirt and Tank top",
-                        "Fuzzy tops Cardigans",
-                    ],
-                    ["Cowboy hat", "Hoodie", "Western flannel"],
-                    ["Cowboy hat", "Button up Shirt", "Western flannel"],
-                    ["Coat", "Suit", "Hoodie", "Suit Coat"],
-                    [
-                        "Formal wear",
-                        "Coat",
-                        "Fur clothing",
-                        "Fuzzy shirts Sweatshirt Hoodie",
-                        "Fuzzy Sweatershirts Coats",
-                    ],
-                    ["Blazer", "Formal wear", "Fuzzy", "Fuzzy Sweatershirts Coats"],
-                    ["Style", "Abdomen", "T-shirt and Tank top", "Blouses"],
-                    ["Style", "T-shirt and Tank top", "Blouse"],
-                    ["Shirt", "Suit Coat", "Blazer"],
-                    ["Shirt", "Coat", "Suit", "Button up Shirt", "Blazer"],
-                    ["Dress", "Day dress", "Sun dress"],
-                    ["Pattern", "Sun dress", "Sun dress"],
-                    ["Vest", "Bodybuilding", "Bodybuilding Tank-top"],
-                    [
-                        "Abdomen",
-                        "T-shirt",
-                        "Bodybuilding Tank-top",
-                        "Bodybuilding Tank-top",
-                    ],
-                    ["Suit", "Hoodie", "Blazer"],
-                    ["Polo shirt", "Abdomen", "T-shirts and Tank top", "Polo Shirt"],
-                    ["Polo shirt", "T-shirt", "Jersey", "Abdomen", "Polo Shirt"],*/
+		    ["Fur", "Jackets"],
+		    ["Clothing", "Shirts and Dress Shirt"],
+		    ["child", "womens", "girl"],
+		    ["child", "mens", "boy"],
                 ];
 
                 subLen = substitutions.length;
@@ -408,7 +325,7 @@ app.get("/", (req, res) => {
                                             //location: "Dallas", (don't think this will be needed)
                                             hl: "en",
                                             gl: "us",
-                                            api_key: "1ddcfec971878897acb77777350a952cedd2b48df96441783d389c7591584cb5"
+                                            api_key: "883e000a146472beb0faad3b3578b5aecddd701d1e0ccd794c5350351c47e085"
                                         }, (result) => {
                                             const linksRef = ref(db,"scan/links");
 
@@ -545,5 +462,4 @@ app.get("/remove", function (req, res) {
         linkAmt: 0,
     });
 });
-
 
